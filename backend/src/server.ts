@@ -1,9 +1,8 @@
-import express from "express";
+import express from 'express';
 
 const app = express();
 
-app.get('/', (request, response) => {
-  return response.json({message: "Let's catch!"})
-})
+app.get('/', (request, response) => response.json({ message: "Let's catch!" }));
 
-app.listen(3003, () => console.log('Runing!'))
+// eslint-disable-next-line no-console
+app.listen(3003, () => console.log('Runing!'));
