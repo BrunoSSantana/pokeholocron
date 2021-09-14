@@ -1,0 +1,135 @@
+.container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+
+    .right{
+        width: 50%;
+        background: rgb(156,249,255);
+        background: linear-gradient(176deg, rgba(156,249,255,1) 0%, rgba(0,129,185,1) 100%);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .login{
+            height: 75%;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            background-color: #6DD0EF;
+            border-radius: 20px;
+            box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.438);
+
+            button{
+                
+                    cursor: pointer;
+            }
+
+            h1{
+                text-align: center;
+            }
+
+            p{
+                margin-left: 20px;
+            }
+
+            .LoginContainer{
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+
+                input{
+                    margin-left: 20px;
+                    margin-right: 20px;
+                    padding-left: 60px;
+                    border: none;
+                    border-radius: 25px;
+                    height: 6.5vh;
+                    width: 100%;
+                    margin-top: 40px;
+                    outline: none;
+                }
+
+                .iconEmail{
+                    background: url(../../assets/email.svg);
+                }
+
+                .iconSenha{
+                    background: url(../../assets/senha.svg);
+                }
+
+                .iconEmail, .iconSenha{   
+                    top: 7px;
+                    left: 33px;
+                    margin-top: 40px;
+	                background-repeat: no-repeat;
+	                background-size: cover;
+	                background-position: center;
+                    width: 5vh;
+                    height: 5vh;
+                    position: absolute;
+                }
+            }
+            
+            .ocultar{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 60px;
+
+                button{
+                    background: none;
+                    border: none;
+                }
+                a{
+                    text-decoration: none;
+                    color: rgb(255, 255, 255);
+                }
+            }
+
+            .final{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                height: 100px;
+
+                
+                .button1{            
+                    background: #B7FF8A;
+                }
+                .button1:hover{            
+                    background: #99e669;
+                }
+
+                .button2{   
+                    background-color: #ADFFFA;           
+                }
+                .button2:hover{   
+                    background-color: #79d8d2;           
+                }
+
+                .button1, .button2{
+                    height: 40px;
+                    width: 200px;
+                    border-radius: 16px;
+                    border: none;
+                    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.178);
+                }
+            }     
+        }
+    }  
+    .imagem{
+        width: 50%;
+        background: url(../../assets/1060624.png);
+        justify-content: center;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+}

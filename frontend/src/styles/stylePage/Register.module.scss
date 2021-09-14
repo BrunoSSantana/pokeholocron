@@ -1,0 +1,112 @@
+.container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+
+    .right{
+        width: 50%;
+        background: rgb(156,255,172);
+background: linear-gradient(176deg, rgba(156,255,172,1) 0%, rgba(0,185,52,1) 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .login{
+            height: 75%;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            background-color: #7FEF6D;
+            border-radius: 20px;
+            box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.438);
+
+            button{
+                    cursor: pointer;
+            }
+
+            h1{
+                text-align: center;
+            }
+
+            .registerContainer{
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+
+                input{
+                    margin-left: 20px;
+                    margin-right: 20px;
+                    padding-left: 60px;
+                    border: none;
+                    border-radius: 25px;
+                    height: 6.5vh;
+                    width: 100%;
+                    margin-top: 40px;
+                    outline: none;
+                }
+
+                .iconPerfil{
+                    background: url(../../assets/perfil.svg);
+                }
+
+                .iconSenha{
+                    background: url(../../assets/senha.svg);
+                }
+
+                .iconEmail{
+                    background: url(../../assets/email.svg);
+                }
+
+                .iconPerfil, .iconSenha, .iconEmail{   
+                    top: 7px;
+                    left: 33px;
+                    margin-top: 40px;
+	                background-repeat: no-repeat;
+	                background-size: cover;
+	                background-position: center;
+                    width: 5vh;
+                    height: 5vh;
+                    position: absolute;
+                }
+            }
+            
+            .ocultar{
+                display: flex;
+                flex-direction: row;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 60px;
+                background: none;
+                border: none;
+            }
+
+            .createAccount{
+                text-align: center;
+                button{
+                    height: 40px;
+                    width: 200px;
+                    border-radius: 16px;
+                    border: none;
+                    background: #B7FF8A;
+                    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.178);
+                }
+
+                button:hover{
+                    
+                    background: #95dd68;
+                }
+                
+            }   
+        }
+    }  
+    .imagem{
+        width: 50%;
+        background: url(../../assets/imgRegister.jpg);
+        justify-content: center;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+}
