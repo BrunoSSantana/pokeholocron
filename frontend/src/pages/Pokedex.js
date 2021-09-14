@@ -14,13 +14,9 @@ export default function Pokedex() {
 
   const {pokemons, setPokemons} = useContext(PokemonsContext)
 
- 
-
-
   useEffect(() => {
     console.log('aqui pokedex: ', pokemons)
 }, [setPokemons])
-
 
 
   function teste() {
