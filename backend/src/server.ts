@@ -1,6 +1,6 @@
 import express from 'express';
 import { routes } from './routes';
-
+import './database/connections'
 const app = express();
 
 app.use(routes);
