@@ -4,11 +4,7 @@ import MenuComponent from '../components/MenuComponent'
 import TitleComponent from '../components/TitleComponent'
 import Axios from 'axios';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
     Link,
-    useRouteMatch
   } from "react-router-dom";
 // import styles from '../styles/stylePage/Home.module.scss'
 
@@ -19,33 +15,43 @@ export default function Home() {
     const [idPokemon, setIdPokemon] = useState('')
     const [pokemons, setPokemons] = useState([])
     var final = []
-    function Pokemons1g() {
-        Axios.get('https://pokeapi.co/api/v2/generation/1').then((response) => {
-            console.log('ima: ', response.data.pokemon_species[0].name)
-            var namePolekemons = []
-            for(var i= 0; i < response.data.pokemon_species.length; i++){
-                namePolekemons.push(response.data.pokemon_species[i].name)
-            }            
-            for(var o= 0; o < namePolekemons.length; o++){
-                Axios.get(`https://pokeapi.co/api/v2/pokemon/${namePolekemons[o]}`).then((response) => {
-                    final.push(response.data)
-                })               
-            }            
-        })
-        setPokemons(final)
-    }
+    var namePokemons = []
+    
 
     
 
 
-    useEffect(async()=>{
-       await Pokemons1g()
-    },[])
+    async function getAllPokemons() {
+        const { data } = await Axios.get('https://pokeapi.co/api/v2/generation/1')
+        let pokes = [];
+
+        const promisseMap = data.pokemon_species.map(async pokemon => {
+            const res = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+            pokes.push(res.data);
+        });
+
+        await Promise.all(promisseMap);
+
+        setPokemons(pokes);
+    }
+
+    useEffect(() => {
+        getAllPokemons()
+    }, []);
+
+
+
+
+
+    function teste(){
+        console.log('namePokemons', namePokemons)
+    }
 
 
     return (
         <div>
             <Link to='/pokedex'>go pokedex</Link>
+            <button onClick={teste}>teste</button>
             <HeaderComponent />
             <MenuComponent user='douglas'/>
             <TitleComponent title='All Pokemons'/>

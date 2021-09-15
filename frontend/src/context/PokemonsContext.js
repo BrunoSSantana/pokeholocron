@@ -9,7 +9,7 @@ export default function PokemonsProvider({ children }) {
 
     
 
-    useEffect(() => {
+  /*  useEffect(() => {
        async function Pokemons1g() {
            const response = await Axios.get('https://pokeapi.co/api/v2/generation/1').then((response) => {
                 var namePolekemons = []
@@ -36,7 +36,7 @@ export default function PokemonsProvider({ children }) {
     }, [setPokemons])
 
 
-
+*/
     return (
         <PokemonsContext.Provider value={{ pokemons, setPokemons }}>
             {children}
