@@ -9,6 +9,9 @@ class Pokemon {
   id: string;
 
   @Column()
+  poke_id: number;
+
+  @Column()
   trainer_id: string;
 
   @Column()
