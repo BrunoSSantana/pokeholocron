@@ -8,6 +8,7 @@ class SignUp {
     async store(req: Request, res: Response) {
         const repository = getRepository(Trainer);
         const { nick_name, email, password } = req.body;
+        console.log(nick_name)
 
         const trainerExist = await repository.findOne({ where: { email } });
 
