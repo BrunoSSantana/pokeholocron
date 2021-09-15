@@ -19,6 +19,10 @@ export class CreateCompliments1630948076541 implements MigrationInterface {
             type: 'uuid',
           },
           {
+            name: 'poke_id',
+            type: 'numeric',
+          },
+          {
             name: 'name',
             type: 'varchar',
           },
