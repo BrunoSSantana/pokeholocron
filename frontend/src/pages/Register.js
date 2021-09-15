@@ -15,6 +15,8 @@ export default function Register() {
         }
     }
 
+  
+
     return (
         <div className={styles.container}>
         <div className={styles.imagem}>
@@ -40,7 +42,7 @@ export default function Register() {
                     <input type='password' id='senha' placeholder='Your password'></input>
                 </div>
                 <button onClick={mostrarSenha} className={styles.ocultar}><input id='mostrar' value='pass' type='checkbox' />Show password</button>
-                <a href='/login' className={styles.createAccount}><button >Create account</button></a>
+                <a href='/login'  className={styles.createAccount}><button >Create account</button></a>
                
             </div>
         </div>

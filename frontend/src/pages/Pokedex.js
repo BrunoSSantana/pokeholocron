@@ -13,10 +13,31 @@ export default function Pokedex() {
   const [name, setName] = useState('')
 
   const { pokemons, setPokemons } = useContext(PokemonsContext)
+  /*
+    useEffect(() => {
+      console.log('aqui pokedex: ', pokemons)
+  }, [setPokemons])
+  
+  */
+
+
+  async function getAllPokemons() {
+    const { data } = await Axios.get('https://pokeapi.co/api/v2/generation/1')
+    let pokes = [];
+
+    const promisseMap = data.pokemon_species.map(async pokemon => {
+      const res = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+      pokes.push(res.data);
+    });
+
+    await Promise.all(promisseMap);
+
+    setPokemons(pokes);
+  }
 
   useEffect(() => {
-    console.log('aqui pokedex: ', pokemons)
-  }, [setPokemons])
+    getAllPokemons()
+  }, []);
 
 
   function teste() {

@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import styles from '../styles/stylePage/Login.module.scss'
+import { useHistory } from "react-router";
+import Axios from 'axios';
 
 export default function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const history = useHistory()
 
     function mostrarSenha() {
         var tipo = document.getElementById('senha')
@@ -18,8 +22,11 @@ export default function Login() {
         }
     }
 
-    function checkLogin(){
-        console.log(email)
+    function checkLogin() {
+       
+
+
+
     }
 
 
