@@ -22,6 +22,6 @@ routes
   .get('/pokemons', findCapturedPokemonsController.handle)
   .get('/pokemons/filter', fillterPokemonsController.handle)
   .get('/pokemons/:poke_id', detailsPokemonController.handle)
-  .delete('/pokemons/:poke_id', excludePokemonController.handle);
+  .delete('/pokemons/:id', excludePokemonController.handle);
 
 export { routes };

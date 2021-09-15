@@ -9,11 +9,11 @@ class ExcludePokemonController {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
-      const { poke_id } = request.params;
+      const { id } = request.params;
 
-      const pokemon = await pokemonsRepositories.delete(poke_id);
+      await pokemonsRepositories.delete(id);
 
-      return response.json(pokemon);
+      return response.send();
     } catch (error) {
       return response.status(500).json({
         status: 'error',
