@@ -23,20 +23,7 @@ export default function Login() {
     }
 
     function checkLogin() {
-        Axios.post('http://localhost:3002/api/login', {
-            userEmail: email,
-            userPassword: password,
-        }).then((response) => {
-            if (!response.data.auth) {
-                //Não encontrado
-                alert('Usuário e/ou senha inválidos')
-                //setIsAuth(false)
-
-            } else {
-                //Usuário encontrado 
-                history.push('/home')
-            }
-        })
+       
 
 
 
