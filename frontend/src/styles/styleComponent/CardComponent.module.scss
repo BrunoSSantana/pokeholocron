@@ -1,0 +1,153 @@
+.card {
+  background-color: transparent;
+  perspective: 1000px;
+  width: 160px;
+  height: 220px;
+  margin: 10px;
+
+  .inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+    .card_front{
+      width: 160px;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+    
+      .poke_id{
+        background: #FFFFFF99;
+        width: 32px;
+        height: 25px;
+        text-align: center;
+        padding: 0 4px;
+        border-radius: 10px;
+    
+        span{
+          font-size: 12px;
+        }
+      }
+    
+      .content_main {
+        margin: 10px;
+        height: 90px;
+        width: 90px;
+        background: #fff;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+          height: 50px;
+        }
+      }
+    
+      .poke_type {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+        span {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+    
+          p {
+            min-width: 40px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 10pt;
+            padding: 6px;
+            color: #FAFAFA;
+            background: #383838;
+          }
+    
+        }
+      }
+    
+      button {
+        background: none;
+        border: none;
+        margin-top: 10px;
+        
+        
+        .buttonLegend{
+          position: absolute;
+          right: 50%;
+          transform: translateX(50%);
+          z-index: 5;
+          background: #38383899;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 4px;
+          border-radius: 2px;
+          visibility: hidden;
+        }
+    
+        &:hover .buttonLegend{
+          visibility: visible;
+        }
+    
+        &:hover {
+          cursor: pointer;
+        }
+        img {
+          height: 32px;
+        }
+      }
+    }
+
+    .card_back{
+      transform: rotateY(180deg) translateX(20px);
+
+      width: 160px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      .logoContainer{
+        width: 60px;
+        height: 40px;
+      
+        img{
+          max-width: 100%;
+        }
+      }
+
+      .main{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:6px;
+
+        .attribute{
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+      }
+    }
+
+    .card_front, 
+    .card_back{
+      position: absolute;
+      -webkit-backface-visibility: hidden; /* Safari */
+      backface-visibility: hidden;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: -4px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+

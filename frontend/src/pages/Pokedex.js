@@ -12,15 +12,11 @@ export default function Pokedex() {
 
   const [name, setName] = useState('')
 
-  const {pokemons, setPokemons} = useContext(PokemonsContext)
-
- 
-
+  const { pokemons, setPokemons } = useContext(PokemonsContext)
 
   useEffect(() => {
     console.log('aqui pokedex: ', pokemons)
-}, [setPokemons])
-
+  }, [setPokemons])
 
 
   function teste() {
@@ -61,11 +57,17 @@ export default function Pokedex() {
           return (
             <div key={val.name}>
               <CardComponent
-                poke_id={val.id}
-                name={val.name}
-                types={val.types}
-                img={val.sprites.front_default} />
-
+                pokemon={{
+                  name: val.name,
+                  poke_id: val.id,
+                  types: val.types,
+                  img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${val.id}.svg`,
+                  abilities: val.abilities,
+                  weight: val.weight,
+                  attack: val.stats[1].base_stat,
+                  defense: val.stats[2].base_stat,
+                }}
+              />
             </div>
           )
         })}

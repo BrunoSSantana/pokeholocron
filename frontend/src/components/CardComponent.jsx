@@ -1,24 +1,111 @@
-import style from '../styles/stylePage/Pokedex.module.scss'
+import { useEffect, useRef } from 'react';
+import style from '../styles/styleComponent/CardComponent.module.scss'
+import { SetTypeColor } from '../utils/SetTypeColor'
 
-export default function CardComponent({name, img, types, poke_id}) {
+export default function CardComponent({ pokemon }) {
+  const divFlipHover = useRef(null);
+  const cardBackRef = useRef(null);
+  const innerRef = useRef(null);
+
+  const {
+    name,
+    img,
+    types,
+    poke_id,
+    abilities,
+    weight,
+    attack,
+    defense
+  } = pokemon
+
+  const cardBackgroundColor = `${SetTypeColor(types[0].type.name)}99`;
+
+  async function handleCatch() {
+    //função para salvar no banco
+  }
+
+  useEffect(() => {
+    divFlipHover.current.addEventListener("mouseenter", () => {
+      innerRef.current.style.transform = 'rotateY(180deg)';
+    });
+    cardBackRef.current.addEventListener("mouseleave", () => {
+      innerRef.current.style.transform = 'rotateY(0)';
+    });
+  }, []);
+
   return (
     <div className={style.card}>
-      <div className={style.poke_id}>
-        <h1>id: {poke_id}</h1>
-      </div>
-      <div className={style.content_main}>
-        <img src={img} alt="" />
-      </div>
-      <h2>{name}</h2>
-      <div className={style.poke_type}>
-        <h1>
-          
+      <div className={style.inner} ref={innerRef}>
 
-        </h1>
+        <div
+          className={style.card_front}
+          style={{ background: cardBackgroundColor }}
+        >
+          <div className={style.poke_id}>
+            <span>{`#${poke_id}`}</span>
+          </div>
+
+          <div className={style.content_main} ref={divFlipHover}>
+            <img src={img} alt="" />
+          </div>
+
+          <h3>{name}</h3>
+
+          <div className={style.poke_type}>
+            <span>
+              {types.map((type, index) => (
+                <p
+                  key={index}
+                  style={{
+                    background: SetTypeColor(type.type.name)
+                  }}
+                >
+                  {type.type.name}
+                </p>
+              ))}
+            </span>
+          </div>
+
+          <button onClick={handleCatch}>
+            <img src="https://img.icons8.com/external-those-icons-lineal-color-those-icons/48/000000/external-pokeball-video-games-those-icons-lineal-color-those-icons.png" alt="pokebola" />
+            <div className={style.buttonLegend}>
+              Capturar
+            </div>
+          </button>
+        </div>
+
+        <div
+          className={style.card_back}
+          style={{ background: cardBackgroundColor }}
+          ref={cardBackRef}
+        >
+          <div className={style.logoContainer}>
+            <img src="https://logodownload.org/wp-content/uploads/2017/08/pokemon-logo.png" alt="logo" />
+          </div>
+
+          <div className={style.main}>
+            <div className={style.attribute}>
+              <strong>Peso: </strong>
+              <p>{weight}</p>
+            </div>
+            <div className={style.attribute}>
+              <strong>Ataque: </strong>
+              <p>{attack}</p>
+            </div>
+            <div className={style.attribute}>
+              <strong>Defesa: </strong>
+              <p>{defense}</p>
+            </div>
+
+            <strong>Habilidades: </strong>
+            {abilities.map((ability, index) => (
+              <div className={style.attribute} key={index}>
+                <p>{ability.ability.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <button>
-        <img src="https://img.icons8.com/external-those-icons-lineal-color-those-icons/48/000000/external-pokeball-video-games-those-icons-lineal-color-those-icons.png" alt="pokebola" />
-      </button>
     </div>
   )
 }

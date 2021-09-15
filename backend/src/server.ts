@@ -1,9 +1,16 @@
-import express from 'express';
+/* eslint-disable no-unused-vars */
+import express, { NextFunction, Request, Response } from 'express';
 import { routes } from './routes';
-import './database/connections'
+import './database/connections';
+
 const app = express();
 
+<<<<<<< HEAD
 app.use(express.json())
+=======
+app.use(express.json());
+
+>>>>>>> cbd9c59d3dfc4dca88d799612fca5c1c29814487
 app.use(routes);
 
 
