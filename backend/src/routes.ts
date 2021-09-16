@@ -16,8 +16,8 @@ const fillterPokemonsController = new FillterPokemonsController();
 const routes = Router();
 
 routes.get('/', (request, response) => response.json());
-routes.post('/signup', SignUp.store );
-routes.post('/signin', Signin.authenticate );
+routes.post('/signup', SignUp.store);
+routes.post('/signin', Signin.authenticate);
 
 routes
   .post('/pokemons', addPokemonControler.handle)
