@@ -1,32 +1,40 @@
-import { useEffect, useState, useContext } from 'react'
-import CardComponent from '../components/CardComponent'
+import { useEffect, useState } from 'react'
 import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
-import { PokemonsContext } from '../context/PokemonsContext';
+import CardPokedexComponent from '../components/CardPokedexComponent';
 
 export default function Pokedex() {
 
   const [name, setName] = useState('')
   const [typePokemon, setTypePokemon] = useState('')
   const [pokeId, setPokeId] = useState('')
+  const [pokemonsf, SetPokemonsf] = useState([])
 
-  const { pokemons, setpokemons } = useContext(PokemonsContext)
-
-  function FilterPokedex(){
-    Axios.get('http://localhost:3003/pokemons/', {
-      trainer:localStorage.getItem('id')
-    }).then((response) => {   
-      console.log(response)        
-       
-      
+  async function FilterPokedex() {
+   const MyPokemons= await Axios.post('http://localhost:3003/myPokemons', {
+      trainer_id: localStorage.getItem('id'),
     })
 
-}
- 
+    
+    SetPokemonsf(MyPokemons.data)
+
+
+   console.log('MyPokemons', JSON.parse(MyPokemons.data[0].types))
+    //converterToArray(MyPokemons.data[0].types)
+
+   //JSON.parse()
+  }
+
+
+  useEffect(()=>{
+    FilterPokedex()
+  },[])
+
+
 
   return (
+    
     <div className={style.pokedex_container}>
-
       <div className={style.header}>Pokedex</div>
 
       <div className={style.inputs}>
@@ -44,7 +52,7 @@ export default function Pokedex() {
 
         <div className="input">
           <label htmlFor="">Id: </label>
-          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }}/>
+          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }} />
         </div>
       </div>
 
@@ -53,7 +61,25 @@ export default function Pokedex() {
 
       <div className={style.card_container}>
 
-   
+      {pokemonsf.map((val) => {
+          return (
+            <div key={val.name}>
+              <CardPokedexComponent
+                pokemon={{
+                  name: val.name,
+                  poke_id: val.poke_id,
+                  types: val.types,
+                  img: val.image,
+                  abilities: val.abilities,
+                  weight: val.weight,
+                  attack: val.attack,
+                  defense: val.defense,
+                  height: val.height
+                }}
+              />
+            </div>
+          )
+        })}
 
       </div>
 

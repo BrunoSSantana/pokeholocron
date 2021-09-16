@@ -26,29 +26,26 @@ export default function Login() {
         Axios.post('http://localhost:3003/signin', {
             email: email,
             password: password,
-        }).then((response) => {           
+        }).then((response) => {
             if (!response.data) {
                 //User Não encontrado
                 //falta receber o tratamento
                 alert('Usuário, email e/ou senha ja existem')
-            }else {
+            } else {
                 //Usuário encontrado
-                localStorage.setItem('token', response.data.token) 
+                localStorage.setItem('token', response.data.token)
                 localStorage.setItem('email', response.data.trainer.email)
                 localStorage.setItem('id', response.data.trainer.id)
-                localStorage.setItem('nick_name', response.data.trainer.nick_name) 
+                localStorage.setItem('nick_name', response.data.trainer.nick_name)
                 history.push('/')
             }
         })
     }
 
-
     return (
         <div className={styles.container}>
             <div className={styles.imagem}>
-
             </div>
-
             <div className={styles.right}>
                 <div className={styles.login} >
                     <h1>Wellcome!</h1>
@@ -60,7 +57,6 @@ export default function Login() {
 
                     <div className={styles.LoginContainer}>
                         <div className={styles.iconSenha}>
-
                         </div>
                         <input type='password' id='senha' placeholder='Your password' onChange={(e) => { setPassword(e.target.value) }}></input>
                     </div>
@@ -71,14 +67,12 @@ export default function Login() {
                     </div>
 
                     <div className={styles.final}>
-                        <a ><button className={styles.button1} onClick={checkLogin}>Login</button></a>
+                        <button className={styles.button1} onClick={checkLogin}>Login</button>
                         <a href='/Register'><button className={styles.button2} >Create account</button></a>
                     </div>
 
-
                 </div>
             </div>
-
         </div>
     )
 }

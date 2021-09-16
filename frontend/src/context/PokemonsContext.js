@@ -22,7 +22,6 @@ export default function PokemonsProvider({ children }) {
     }
 
     useEffect(() => {
-        console.log('context')
         getAllPokemons()
     }, []);
 

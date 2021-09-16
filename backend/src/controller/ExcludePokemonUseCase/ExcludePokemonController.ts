@@ -9,11 +9,16 @@ class ExcludePokemonController {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
-      const { poke_id } = request.params;
+      const { id } = request.params;
+      // trazer id do usuário pelo token
 
-      const pokemon = await pokemonsRepositories.delete(poke_id);
+      // busca o pokemon
 
-      return response.json(pokemon);
+      // if pokemon.trainer_id !== id no token => Não é possível excluir esse pokémon
+
+      await pokemonsRepositories.delete(id);
+
+      return response.send();
     } catch (error) {
       return response.status(500).json({
         status: 'error',

@@ -3,7 +3,7 @@ import style from '../styles/styleComponent/CardComponent.module.scss'
 import { SetTypeColor } from '../utils/SetTypeColor'
 import Axios from 'axios';
 
-export default function CardComponent({ pokemon }) {
+export default function CardPokedexComponent({ pokemon }) {
   const divFlipHover = useRef(null);
   const cardBackRef = useRef(null);
   const innerRef = useRef(null);
@@ -20,14 +20,20 @@ export default function CardComponent({ pokemon }) {
     height
   } = pokemon
 
-  const cardBackgroundColor = `${SetTypeColor(types[0].type.name)}99`;
+ 
+
+  const cardBackgroundColor = `${SetTypeColor(types[0])}99`;
 
   async function handleCatch() {
     //função para salvar no banco
+
+
+
     Axios.post('http://localhost:3003/pokemons', {
       poke_id: poke_id, name: name, types: types, image: img, weight: weight, height:height, attack: attack, defense: defense, abilities: abilities, trainer_id: localStorage.getItem('id'),
-        }).then((response) => {      
-          console.log('adicionou o types: ', response)  
+        }).then((response) => {  
+     
+            
             if (!response.data) {
                 //pokemon error
                 //falta receber o tratamento
@@ -69,18 +75,7 @@ export default function CardComponent({ pokemon }) {
           <h3>{name}</h3>
 
           <div className={style.poke_type}>
-            <span>
-              {types.map((type, index) => (
-                <p
-                  key={index}
-                  style={{
-                    background: SetTypeColor(type.type.name)
-                  }}
-                >
-                  {type.type.name}
-                </p>
-              ))}
-            </span>
+          
           </div>
 
           <button onClick={handleCatch}>
@@ -115,11 +110,7 @@ export default function CardComponent({ pokemon }) {
             </div>
 
             <strong>Habilidades: </strong>
-            {abilities.map((ability, index) => (
-              <div className={style.attribute} key={index}>
-                <p>{ability.ability.name}</p>
-              </div>
-            ))}
+            
           </div>
         </div>
       </div>

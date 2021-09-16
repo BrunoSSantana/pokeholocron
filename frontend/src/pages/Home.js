@@ -1,7 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import HeaderComponent from '../components/HeaderComponent'
-import MenuComponent from '../components/MenuComponent'
-import TitleComponent from '../components/TitleComponent'
+import React, { useContext, useState } from 'react'
 import Axios from 'axios';
 import { Link } from "react-router-dom";
 import CardComponent from '../components/CardComponent';
@@ -15,12 +12,8 @@ export default function Home() {
     const [pokeId, setPokeId] = useState('')
 
     const { pokemons } = useContext(PokemonsContext)
-    console.log('typePokemon:',typePokemon)
 
     function FilterPokedex(){
-      console.log('name',name)
-      console.log('typePokemon:',typePokemon)
-      console.log('pokeId',pokeId)
         Axios.post('http://localhost:3003/pokemons/filter', {
             type:typePokemon, 
             poke_id:pokeId, 
