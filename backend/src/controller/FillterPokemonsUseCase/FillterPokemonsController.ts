@@ -14,7 +14,13 @@ class FillterPokemonsController {
 
       if (type) {
         const entityManager = getManager();
-        const Newquery = entityManager.query(`SELECT * FROM pokemons WHERE types @> ARRAY['${type}']::varchar[]`);
+        const Newquery = entityManager
+          .query(
+            `SELECT *
+            FROM pokemons 
+            WHERE types @> 
+            ARRAY['${type}']::varchar[]`,
+          );
         const pokeFilter = await Newquery;
         return response.json(pokeFilter);
       }
