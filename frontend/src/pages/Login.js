@@ -23,10 +23,24 @@ export default function Login() {
     }
 
     function checkLogin() {
-       
-
-
-
+        Axios.post('http://localhost:3003/signin', {
+            email: email,
+            password: password,
+        }).then((response) => {
+            console.log(response)
+            if (!response.data) {
+                //User Não encontrado
+                //falta receber o tratamento
+                alert('Usuário, email e/ou senha ja existem')
+            }else {
+                //Usuário encontrado
+                localStorage.setItem('token', response.data.token) 
+                localStorage.setItem('email', response.data.trainer.email)
+                localStorage.setItem('id', response.data.trainer.id)
+                localStorage.setItem('nick_name', response.data.trainer.nick_name) 
+                history.push('/')
+            }
+        })
     }
 
 
@@ -58,7 +72,7 @@ export default function Login() {
                     </div>
 
                     <div className={styles.final}>
-                        <a href='/'><button className={styles.button1} onClick={checkLogin}>Login</button></a>
+                        <a ><button className={styles.button1} onClick={checkLogin}>Login</button></a>
                         <a href='/Register'><button className={styles.button2} >Create account</button></a>
                     </div>
 

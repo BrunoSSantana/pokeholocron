@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/stylePage/Register.module.scss'
+import Axios from 'axios';
+import { useHistory } from "react-router";
 
 export default function Register() {
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const history = useHistory()
+    
 
     function mostrarSenha() {
         var tipo = document.getElementById('senha')
@@ -13,6 +22,23 @@ export default function Register() {
             tipo.type = "password"
             check.checked = false
         }
+    }
+
+    function register() {
+        Axios.post('http://localhost:3003/SignUp', {
+            nick_name: name,
+            email: email,
+            password: password,
+        }).then((response) => { 
+            if (!response.data) {
+                //Ja existe user
+                //falta receber o tratamento
+                alert('Usuário, email e/ou senha ja existem')
+            }else {
+                //Novo Usuário único 
+                history.push('/login')
+            }
+        })
     }
 
   
@@ -29,20 +55,20 @@ export default function Register() {
                 
                 <div className={styles.registerContainer}>
                     <div className={styles.iconPerfil}></div>
-                    <input type='name' placeholder='Your name'></input>
+                    <input type='name' placeholder='Your name' onChange={(e) => { setName(e.target.value) }}></input>
                 </div>
 
                 <div className={styles.registerContainer}>
                     <div className={styles.iconEmail}></div>
-                    <input type='email' placeholder='Your e-mail'></input>
+                    <input type='email' placeholder='Your e-mail' onChange={(e) => { setEmail(e.target.value) }}></input>
                 </div>
 
                 <div className={styles.registerContainer}>
                     <div className={styles.iconSenha}></div>
-                    <input type='password' id='senha' placeholder='Your password'></input>
+                    <input type='password' id='senha' placeholder='Your password' onChange={(e) => { setPassword(e.target.value) }}></input>
                 </div>
                 <button onClick={mostrarSenha} className={styles.ocultar}><input id='mostrar' value='pass' type='checkbox' />Show password</button>
-                <a href='/login'  className={styles.createAccount}><button >Create account</button></a>
+                <a className={styles.createAccount}><button onClick={register}>Create account</button></a>
                
             </div>
         </div>

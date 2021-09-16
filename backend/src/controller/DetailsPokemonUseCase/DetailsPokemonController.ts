@@ -10,11 +10,14 @@ class DetailsPokemonController {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
       const { poke_id } = request.params;
+//001 bulbasaur
 
       const pokemon = await pokemonsRepositories
         .createQueryBuilder('pokemons')
         .where('pokemons.poke_id = :poke_id', { poke_id })
         .getOne();
+
+        //return 1 pokemon
 
       return response.json(pokemon);
     } catch (error) {

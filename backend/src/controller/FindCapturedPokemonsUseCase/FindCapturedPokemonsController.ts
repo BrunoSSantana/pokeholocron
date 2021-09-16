@@ -9,6 +9,7 @@ class FindCapturedPokemonsController {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
+      
       const pokemons = await pokemonsRepositories
         .createQueryBuilder('pokemons')
         .orderBy('pokemons.name')
