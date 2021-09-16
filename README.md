@@ -1,6 +1,3 @@
-## Documentação
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=PokeHolocron&uri=https%3A%2F%2Fraw.githubusercontent.com%2FBrunoSSantana%2Fpokeholocron%2Ffeature%2FAddPokemons%2Fdoc%2Fdoc_pokeholocron.json)
-
 <h1 align="center">
 	<!-- <img alt="Logo" src=".github/logo.png" width="200px" /> -->
   Application Logo
@@ -11,23 +8,19 @@
 </h3>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EliasGcf/readme-template">
-
-  <a href="https://www.linkedin.com/in/eliasgcf/">
-    <img alt="Made by" src="https://img.shields.io/badge/made%20by-Elias%20Gabriel-gree">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/BrunoSSantana/pokeholocron">
+  
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/BrunoSSantana/pokeholocron">
+  
+  <a href="https://github.com/BrunoSSantana/pokeholocron/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/BrunoSSantana/pokeholocron">
   </a>
   
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/EliasGcf/readme-template">
-  
-  <a href="https://github.com/EliasGcf/readme-template/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/EliasGcf/readme-template">
+  <a href="https://github.com/BrunoSSantana/pokeholocron/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/BrunoSSantana/pokeholocron">
   </a>
   
-  <a href="https://github.com/EliasGcf/readme-template/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/EliasGcf/readme-template">
-  </a>
-  
-  <img alt="GitHub" src="https://img.shields.io/github/license/EliasGcf/readme-template">
+  <img alt="GitHub" src="https://img.shields.io/github/license/BrunoSSantana/pokeholocron">
 </p>
 
 <p align="center">
@@ -75,7 +68,7 @@ This challenge created by Felipe Pereira and Gabriel Sartorato with the followin
 
 ## 🚀 Technologies
 
-Technologies that I used to develop this api
+Technologies that we used to develop this api
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
@@ -192,7 +185,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 ## 👨‍💻 Contribuidores
 
-💜 Um super thanks 👏 para essa galera que fez esse produto sair do campo da ideia e entrar nas lojas de aplicativos :)
+All the success we achieve is the result of teamwork. It was an honor to have this opportunity to work with these great professionals and to be bringing valuable knowledge of this experience. And a special thanks to the [Holocron community](https://www.instagram.com/somosholocron/) 💜.
 
 <table>
   <tr>
