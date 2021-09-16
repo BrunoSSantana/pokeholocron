@@ -6,6 +6,7 @@ import { DetailsPokemonController } from './controller/DetailsPokemonUseCase/Det
 import { ExcludePokemonController } from './controller/ExcludePokemonUseCase/ExcludePokemonController';
 import { FillterPokemonsController } from './controller/FillterPokemonsUseCase/FillterPokemonsController';
 import { FindCapturedPokemonsController } from './controller/FindCapturedPokemonsUseCase/FindCapturedPokemonsController';
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
 
 const addPokemonControler = new AddPokemonControler();
 const findCapturedPokemonsController = new FindCapturedPokemonsController();
@@ -21,9 +22,9 @@ routes.post('/signin', Signin.authenticate);
 
 routes
   .post('/pokemons', addPokemonControler.handle)
-  .get('/pokemons', findCapturedPokemonsController.handle)
+  .get('/pokemons', ensureAuthenticated, findCapturedPokemonsController.handle)
   .get('/pokemons/filter', fillterPokemonsController.handle)
   .get('/pokemons/:poke_id', detailsPokemonController.handle)
-  .delete('/pokemons/:id', excludePokemonController.handle);
+  .delete('/pokemons/:id', ensureAuthenticated, excludePokemonController.handle);
 
 export { routes };
