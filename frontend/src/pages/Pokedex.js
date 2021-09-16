@@ -6,45 +6,23 @@ import { PokemonsContext } from '../context/PokemonsContext';
 
 export default function Pokedex() {
 
-
-
-
-
   const [name, setName] = useState('')
+  const [typePokemon, setTypePokemon] = useState('')
+  const [pokeId, setPokeId] = useState('')
 
-  const { pokemons, setPokemons } = useContext(PokemonsContext)
-  /*
-    useEffect(() => {
-      console.log('aqui pokedex: ', pokemons)
-  }, [setPokemons])
-  
-  */
+  const { pokemons, setpokemons } = useContext(PokemonsContext)
 
+  function FilterPokedex(){
+    Axios.get('http://localhost:3003/pokemons/', {
+      trainer:localStorage.getItem('id')
+    }).then((response) => {   
+      console.log(response)        
+       
+      
+    })
 
-  async function getAllPokemons() {
-    const { data } = await Axios.get('https://pokeapi.co/api/v2/generation/1')
-    let pokes = [];
-
-    const promisseMap = data.pokemon_species.map(async pokemon => {
-      const res = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
-      pokes.push(res.data);
-    });
-
-    await Promise.all(promisseMap);
-
-    setPokemons(pokes);
-  }
-
-  useEffect(() => {
-    getAllPokemons()
-  }, []);
-
-
-  function teste() {
-    var tipo = document.getElementById('name')
-    tipo.value = 'asdasd'
-  }
-
+}
+ 
 
   return (
     <div className={style.pokedex_container}>
@@ -59,43 +37,23 @@ export default function Pokedex() {
 
         <div className={style.input}>
           <label htmlFor="type">Type:</label>
-          <select name="type" id="type" className={style.type}>
-            <option key='1'>planta</option>
+          <select name="type" id="type" className={style.type} onChange={(e) => { setTypePokemon(e.target.value) }}>
+            <option key='fire'>fire</option>
           </select>
         </div>
 
         <div className="input">
           <label htmlFor="">Id: </label>
-          <input type="text" id="pokeId" />
+          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }}/>
         </div>
       </div>
-      <button onClick={teste}> teste </button>
+
+      <button onClick={FilterPokedex}>FilterPokedex</button>
 
 
       <div className={style.card_container}>
 
-        {pokemons.map((val) => {
-          return (
-            <div key={val.name}>
-              <CardComponent
-                pokemon={{
-                  name: val.name,
-                  poke_id: val.id,
-                  types: val.types,
-                  img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${val.id}.svg`,
-                  abilities: val.abilities,
-                  weight: val.weight,
-                  attack: val.stats[1].base_stat,
-                  defense: val.stats[2].base_stat,
-                }}
-              />
-            </div>
-          )
-        })}
-
-
-
-
+   
 
       </div>
 

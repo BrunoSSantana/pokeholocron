@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import style from '../styles/styleComponent/CardComponent.module.scss'
 import { SetTypeColor } from '../utils/SetTypeColor'
+import Axios from 'axios';
 
 export default function CardComponent({ pokemon }) {
   const divFlipHover = useRef(null);
@@ -15,13 +16,29 @@ export default function CardComponent({ pokemon }) {
     abilities,
     weight,
     attack,
-    defense
+    defense,
+    height
   } = pokemon
 
   const cardBackgroundColor = `${SetTypeColor(types[0].type.name)}99`;
 
   async function handleCatch() {
     //função para salvar no banco
+    Axios.post('http://localhost:3003/pokemons', {
+      poke_id: poke_id, name: name, types: types, image: img, weight: weight, height:height, attack: attack, defense: defense, abilities: abilities, trainer_id: localStorage.getItem('id'),
+        }).then((response) => {   
+          console.log('response poke: ', response)        
+            if (!response.data) {
+                //pokemon error
+                //falta receber o tratamento
+                alert('Usuário, email e/ou senha ja existem')
+            }else {
+                //pokemon adicionado
+                alert('você capturou o:  ' + response.data.name)
+            }
+        })
+
+    //
   }
 
   useEffect(() => {

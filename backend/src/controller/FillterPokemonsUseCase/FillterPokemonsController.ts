@@ -7,7 +7,7 @@ import { PokemonsRepositories } from '../../repositories/PokemonsRepositories';
 class FillterPokemonsController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { type, poke_id, name } = request.query;
+      const { type, poke_id, name } = request.body;
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
       const query = pokemonsRepositories.createQueryBuilder('pokemons');

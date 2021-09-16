@@ -23,7 +23,7 @@ routes
   .post('/pokemons', addPokemonControler.handle)
   .get('/pokemons', findCapturedPokemonsController.handle)
   .get('/pokemons/filter', fillterPokemonsController.handle)
-  .get('/pokemons/:poke_id', detailsPokemonController.handle)
+  .post('/pokemons/:poke_id', detailsPokemonController.handle)
   .delete('/pokemons/:poke_id', excludePokemonController.handle);
 
 export { routes };

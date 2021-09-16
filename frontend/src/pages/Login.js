@@ -26,8 +26,7 @@ export default function Login() {
         Axios.post('http://localhost:3003/signin', {
             email: email,
             password: password,
-        }).then((response) => {
-            console.log(response)
+        }).then((response) => {           
             if (!response.data) {
                 //User Não encontrado
                 //falta receber o tratamento
