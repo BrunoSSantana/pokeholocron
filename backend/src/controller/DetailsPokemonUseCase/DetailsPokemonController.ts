@@ -16,6 +16,10 @@ class DetailsPokemonController {
         .where('pokemons.poke_id = :poke_id', { poke_id })
         .getOne();
 
+      if (!pokemon) {
+        return response.status(400).json({ message: 'Pokémon inexistente!' });
+      }
+
       return response.json(pokemon);
     } catch (error) {
       return response.status(500).json({

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable class-methods-use-this */
 import { Request, Response } from 'express';
@@ -9,12 +10,20 @@ class FindCapturedPokemonsController {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
-      const pokemons = await pokemonsRepositories
-        .createQueryBuilder('pokemons')
-        .orderBy('pokemons.name')
-        .getMany();
+      // Mudar quando o middleware estiver trazendo o trainer_id
+      const { trainer_id } = request.body;
 
-      return response.json(pokemons);
+      if (!trainer_id) {
+        return response.status(401).json({ message: 'usuário não Autenticado' });
+      }
+
+      const pokemons = await pokemonsRepositories.find({ trainer_id });
+
+      const pokemonsOrderByName = pokemons.sort((a, b) => (
+        a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+      ));
+
+      return response.json(pokemonsOrderByName);
     } catch (error) {
       return response.status(500).json({
         status: 'error',
