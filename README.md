@@ -1,10 +1,9 @@
 <h1 align="center">
-	<!-- <img alt="Logo" src=".github/logo.png" width="200px" /> -->
-  Application Logo
+	<img alt="Logo" src="https://img.icons8.com/bubbles/500/000000/pokeball.png" width="200px" />
 </h1>
 
 <h3 align="center">
-  Title or one short slogan.
+  Pokeholocron
 </h3>
 
 <p align="center">
