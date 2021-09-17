@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
 import CardPokedexComponent from '../components/CardPokedexComponent';
+import CardComponent from '../components/CardComponent';
 
 export default function Pokedex() {
 
@@ -44,7 +45,6 @@ export default function Pokedex() {
     types.forEach(type => pokemonTypes.push(type.name))
     setTypes(pokemonTypes)
   }
-  getTypesPpokemons()
 
   function filterById(pokemonId) {
     const newPokemons = []

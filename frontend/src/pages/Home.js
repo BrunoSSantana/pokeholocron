@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import CardComponent from '../components/CardComponent';
 import style from '../styles/stylePage/Home.module.scss'
 import { PokemonsContext } from '../context/PokemonsContext';
+import { useHistory } from "react-router";
 
 export default function Home() {
 
@@ -12,30 +13,14 @@ export default function Home() {
   const [pokeId, setPokeId] = useState('')
   const [types, setTypes] = useState([])
 
+  const history = useHistory()
+
+  const [pokemonsFilter, setPokemonsFilter] = useState()
+
   const { pokemons, setPokemons } = useContext(PokemonsContext)
 
-  function FilterPokedex() {
-    // Axios.post('http://localhost:3003/pokemons/filter', {
-    //   token: typePokemon,
-    //   poke_id: pokeId,
-    //   name: name,
-    // }).then((response) => {
-    //   if (!response.data) {
-    //     //Filter Não encontrado
-    //     //falta receber o tratamento
-    //     alert('')
-    //   } else {
-    //     //Filter encontrado
-    //     alert('Foi')
-
-    //   }
-    // })
-
-
-  }
-
+  
   async function getTypesPpokemons() {
-
     const pokemonTypes = []
 
     const {data} = await Axios.get('https://pokeapi.co/api/v2/type')
@@ -60,18 +45,25 @@ export default function Home() {
   }
 
   function filterByName(pokemonName) {
-    const newPokemons = []
+    let newPokemons = []
 
-    pokemons.map(pokemon => {
+    pokemons.map((pokemon) => {
 
         if (pokemon.name === pokemonName.toLowerCase()) {
           newPokemons.push(pokemon)
         }
 
     })
-
-    setPokemons(newPokemons);
+    
+    setPokemonsFilter(newPokemons);
   }
+
+
+  useEffect(()=>{
+    
+  },[])
+
+
 
   function filterByType(filter) {
 
@@ -88,17 +80,28 @@ export default function Home() {
     setPokemons(newPokemons);
   }
 
+  function BuscarName(){
+    filterByName(name)
+  }
+
+  function sair(){
+    localStorage.removeItem('isAuthenticated');
+    history.push('/login')
+  }
+
 
   return (
     <div className={style.pokedex_container}>
 
       <div className={style.header}>All Pokemons</div>
-      <Link to='/pokedex'>go pokedex</Link>
+      <button onClick={sair}>Sair</button>
+      <a href='/pokedex'><button >Pokedex</button></a>
 
       <div className={style.inputs}>
         <div className="input">
           <label htmlFor="name">Name:</label>
           <input type="text" id="name" onChange={(e) => { setName(e.target.value) }} />
+          <button onClick={BuscarName}>buscar</button>
         </div>
 
         <div className={style.input}>
@@ -116,10 +119,9 @@ export default function Home() {
         </div>
       </div>
 
-      <button onClick={FilterPokedex}>Search</button>
-
 
       <div className={style.card_container}>
+
 
         {pokemons.map((val) => {
           const types = []
