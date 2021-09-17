@@ -3,6 +3,7 @@ import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
 import CardPokedexComponent from '../components/CardPokedexComponent';
 import CardComponent from '../components/CardComponent';
+import { useHistory } from "react-router";
 
 export default function Pokedex() {
 
@@ -11,6 +12,8 @@ export default function Pokedex() {
   const [pokeId, setPokeId] = useState('')
   const [myPokemons, SetMyPokemons] = useState([])
   const [types, setTypes] = useState([])
+
+  const history = useHistory()
 
 
   async function FilterPokedex() {
@@ -93,11 +96,19 @@ export default function Pokedex() {
     FilterPokedex()
   }, [name])
 
+  function sair(){
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('token');
+    history.push('/login')
+  }
+
 
   return (
 
     <div className={style.pokedex_container}>
       <div className={style.header}>Pokedex</div>
+      <button onClick={sair}>Sair</button>
+      <a href='/'><button >All Pokemons</button></a>
 
       <div className={style.inputs}>
         <div className="input">

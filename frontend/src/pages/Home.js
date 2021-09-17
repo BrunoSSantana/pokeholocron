@@ -28,7 +28,6 @@ export default function Home() {
     types.forEach(type => pokemonTypes.push(type.name))
     setTypes(pokemonTypes)
   }
-  getTypesPpokemons()
 
   function filterById(pokemonId) {
     const newPokemons = []
@@ -63,8 +62,6 @@ export default function Home() {
     
   },[])
 
-
-
   function filterByType(filter) {
 
     const newPokemons = []
@@ -86,6 +83,7 @@ export default function Home() {
 
   function sair(){
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('token');
     history.push('/login')
   }
 
