@@ -19,7 +19,15 @@ export default function PokemonsProvider({ children }) {
 
         await Promise.all(promisseMap);
 
-        setPokemons(pokes);
+        setPokemons(pokes.sort(function (a,b) {
+            if (a.id > b.id) {
+              return 1
+            }
+            if (a.id < b.id) {
+              return -1
+            }
+            return 0
+          }));
     }
 
     useEffect(() => {

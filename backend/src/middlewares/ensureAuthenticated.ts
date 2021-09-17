@@ -25,10 +25,8 @@ export function ensureAuthenticated(
       token,
       process.env.SECRET_kEY,
     ) as IPayload;
-    
 
-   request.trainer_id = id;
-
+    request.trainer_id = id;
 
     next();
   } catch (error) {

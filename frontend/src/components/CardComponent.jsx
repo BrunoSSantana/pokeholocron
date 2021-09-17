@@ -20,12 +20,21 @@ export default function CardComponent({ pokemon }) {
     height
   } = pokemon
 
-  const cardBackgroundColor = `${SetTypeColor(types[0].type.name)}99`;
+  const cardBackgroundColor = `${SetTypeColor(types[0])}99`;
 
   async function handleCatch() {
     //função para salvar no banco
     Axios.post('http://localhost:3003/pokemons', {
-      poke_id: poke_id, name: name, types: types, image: img, weight: weight, height:height, attack: attack, defense: defense, abilities: abilities, trainer_id: localStorage.getItem('id'),
+      poke_id: poke_id, 
+      name: name, 
+      types: types, 
+      image: img,
+      weight: weight, 
+      height:height, 
+      attack: attack, 
+      defense: defense, 
+      abilities: abilities, 
+      trainer_id: localStorage.getItem('id'),
         },{
           headers: {
             "authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -110,7 +119,7 @@ export default function CardComponent({ pokemon }) {
             <strong>Habilidades: </strong>
             {abilities.map((ability, index) => (
               <div className={style.attribute} key={index}>
-                <p>{ability.ability.name}</p>
+                <p>{ability}</p>
               </div>
             ))}
           </div>
