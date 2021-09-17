@@ -119,7 +119,7 @@ export default function CardComponent({ pokemon }) {
             <strong>Habilidades: </strong>
             {abilities.map((ability, index) => (
               <div className={style.attribute} key={index}>
-                <p>{ability.ability.name}</p>
+                <p>{ability}</p>
               </div>
             ))}
           </div>

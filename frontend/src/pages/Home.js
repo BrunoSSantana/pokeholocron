@@ -71,10 +71,15 @@ export default function Home() {
 
         {pokemons.map((val) => {
           const types = []
+          const abilities = []
 
+          console.log(val.abilities);
           val.types.map(slot => {
-
             types.push(slot.type.name)
+          })
+
+          val.abilities.map(slot => {
+            abilities.push(slot.ability.name)
           })
 
           return (
@@ -85,7 +90,7 @@ export default function Home() {
                   poke_id: val.id,
                   types,
                   img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${val.id}.svg`,
-                  abilities: val.abilities,
+                  abilities,
                   weight: val.weight,
                   attack: val.stats[1].base_stat,
                   defense: val.stats[2].base_stat,
