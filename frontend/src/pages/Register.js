@@ -3,6 +3,8 @@ import styles from '../styles/stylePage/Register.module.scss'
 import Axios from 'axios';
 import { useHistory } from "react-router";
 
+var validator = require('validator');
+
 export default function Register() {
 
     const [name, setName] = useState('')
@@ -24,7 +26,7 @@ export default function Register() {
     }
 
     async function register() {
-        try {
+        if(validator.isEmail(email)){
             const response = await Axios.post('http://localhost:3003/SignUp', {
                 nick_name: name,
                 email: email,
@@ -38,12 +40,9 @@ export default function Register() {
                 localStorage.setItem('token', response.data.token)
                 history.push('/login')
             }
-
-        } catch (error) {
-            return console.log('asdaa')
-
+        }else{
+            alert('Coloque um Email válido')
         }
-
     }
 
     return (
@@ -55,7 +54,7 @@ export default function Register() {
                     <h1>Register</h1>
                     <div className={styles.registerContainer}>
                         <div className={styles.iconPerfil}></div>
-                        <input type='name' placeholder='Your name' onChange={(e) => { setName(e.target.value) }}></input>
+                        <input type='name' placeholder='Your pokemon trainer name' onChange={(e) => { setName(e.target.value) }}></input>
                     </div>
                     <div className={styles.registerContainer}>
                         <div className={styles.iconEmail}></div>
@@ -66,8 +65,12 @@ export default function Register() {
                         <div className={styles.iconSenha}></div>
                         <input type='password' id='senha' placeholder='Your password' onChange={(e) => { setPassword(e.target.value) }}></input>
                     </div>
+                    
                     <button onClick={mostrarSenha} className={styles.ocultar}><input id='mostrar' value='pass' type='checkbox' />Show password</button>
-                    <button onClick={register}>Create account</button>
+                    <div className={styles.createAccount}>
+                    <button  onClick={register}>Create account</button>
+                    </div>
+                    
                 </div>
             </div>
         </div>

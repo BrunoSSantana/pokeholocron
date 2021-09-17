@@ -33,6 +33,7 @@ export default function Login() {
                 alert('Email e/ou Senha incorretos')
             } else {
                 //Usuário encontrado
+                localStorage.setItem("isAuthenticated", "true");
                 localStorage.setItem('token', response.data.token)
                 history.push('/')
             }

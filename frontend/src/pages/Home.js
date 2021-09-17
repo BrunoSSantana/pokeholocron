@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import React, { useContext, useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Link } from "react-router-dom";
