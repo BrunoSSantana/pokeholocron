@@ -12,30 +12,70 @@ export default function Home() {
   const [typePokemon, setTypePokemon] = useState('fire')
   const [pokeId, setPokeId] = useState('')
 
-  const { pokemons } = useContext(PokemonsContext)
+  const { pokemons, setPokemons } = useContext(PokemonsContext)
 
   function FilterPokedex() {
-    Axios.post('http://localhost:3003/pokemons/filter', {
-      token: typePokemon,
-      poke_id: pokeId,
-      name: name,
-    }).then((response) => {
-      if (!response.data) {
-        //Filter Não encontrado
-        //falta receber o tratamento
-        alert('')
-      } else {
-        //Filter encontrado
-        alert('Foi')
+    // Axios.post('http://localhost:3003/pokemons/filter', {
+    //   token: typePokemon,
+    //   poke_id: pokeId,
+    //   name: name,
+    // }).then((response) => {
+    //   if (!response.data) {
+    //     //Filter Não encontrado
+    //     //falta receber o tratamento
+    //     alert('')
+    //   } else {
+    //     //Filter encontrado
+    //     alert('Foi')
 
-      }
-    })
+    //   }
+    // })
+
 
   }
 
+  function filterById(pokemonId) {
+    const newPokemons = []
 
+    pokemons.map(pokemon => {
 
+        if (pokemon.id === pokemonId) {
+          newPokemons.push(pokemon)
+        }
 
+    })
+
+    setPokemons(newPokemons);
+  }
+
+  function filterByName(pokemonName) {
+    const newPokemons = []
+
+    pokemons.map(pokemon => {
+
+        if (pokemon.name === pokemonName.toLowerCase()) {
+          newPokemons.push(pokemon)
+        }
+
+    })
+
+    setPokemons(newPokemons);
+  }
+
+  function filterByType(filter) {
+
+    const newPokemons = []
+
+    pokemons.map(pokemon => {
+      pokemon.types.map(slot => {
+        if (slot.type.name === filter) {
+          newPokemons.push(pokemon)
+        }
+      })
+    })
+
+    setPokemons(newPokemons);
+  }
 
 
   return (
@@ -73,7 +113,6 @@ export default function Home() {
           const types = []
           const abilities = []
 
-          console.log(val.abilities);
           val.types.map(slot => {
             types.push(slot.type.name)
           })
