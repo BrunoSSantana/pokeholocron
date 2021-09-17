@@ -27,13 +27,15 @@ export default function Pokedex() {
 
     const data = MyPokemons.data
 
-    data.map(async mypokemons => { await arraytype.push(mypokemons) })
+    data.map(async mypokemons => { arraytype.push(mypokemons) })
 
-    arraytype.map(async (val) => { await pokem.push(val.types) })
+    arraytype.map(async (val) => { pokem.push(val.types) })
 
     pokem.map(async pok => {
 
-      const converter = await JSON.parse(pok)
+      console.log(pok);
+      const converter =await JSON.parse(pok)
+      console.log(converter);
       //console.log('aqui:', JSON.parse(pok))
       //final.push(converter)
     })
@@ -67,7 +69,12 @@ export default function Pokedex() {
 
         <div className={style.input}>
           <label htmlFor="type">Type:</label>
-          <select name="type" id="type" className={style.type} onChange={(e) => { setTypePokemon(e.target.value) }}>
+          <select
+            name="type"
+            id="type"
+            className={style.type}
+            onChange={(e) => { setTypePokemon(e.target.value) }}
+          >
             <option key='fire'>fire</option>
           </select>
         </div>

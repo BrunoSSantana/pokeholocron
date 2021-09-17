@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useContext, useState } from 'react'
 import Axios from 'axios';
 import { Link } from "react-router-dom";
@@ -7,38 +8,38 @@ import { PokemonsContext } from '../context/PokemonsContext';
 
 export default function Home() {
 
-    const [name, setName] = useState('')
-    const [typePokemon, setTypePokemon] = useState('fire')
-    const [pokeId, setPokeId] = useState('')
+  const [name, setName] = useState('')
+  const [typePokemon, setTypePokemon] = useState('fire')
+  const [pokeId, setPokeId] = useState('')
 
-    const { pokemons } = useContext(PokemonsContext)
+  const { pokemons } = useContext(PokemonsContext)
 
-    function FilterPokedex(){
-        Axios.post('http://localhost:3003/pokemons/filter', {
-            token:typePokemon, 
-            poke_id:pokeId, 
-            name:name,
-        }).then((response) => {          
-            if (!response.data) {
-                //Filter Não encontrado
-                //falta receber o tratamento
-                alert('')
-            }else {
-                //Filter encontrado
-                alert('Foi')
-                
-            }
-        })
-    
-    }
+  function FilterPokedex() {
+    Axios.post('http://localhost:3003/pokemons/filter', {
+      token: typePokemon,
+      poke_id: pokeId,
+      name: name,
+    }).then((response) => {
+      if (!response.data) {
+        //Filter Não encontrado
+        //falta receber o tratamento
+        alert('')
+      } else {
+        //Filter encontrado
+        alert('Foi')
 
+      }
+    })
 
+  }
 
 
 
 
-    return (
-        <div className={style.pokedex_container}>
+
+
+  return (
+    <div className={style.pokedex_container}>
 
       <div className={style.header}>All Pokemons</div>
       <Link to='/pokedex'>go pokedex</Link>
@@ -59,7 +60,7 @@ export default function Home() {
 
         <div className="input">
           <label htmlFor="">Id: </label>
-          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }}/>
+          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }} />
         </div>
       </div>
 
@@ -69,13 +70,20 @@ export default function Home() {
       <div className={style.card_container}>
 
         {pokemons.map((val) => {
+          const types = []
+
+          val.types.map(slot => {
+
+            types.push(slot.type.name)
+          })
+
           return (
             <div key={val.name}>
               <CardComponent
                 pokemon={{
                   name: val.name,
                   poke_id: val.id,
-                  types: val.types,
+                  types,
                   img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${val.id}.svg`,
                   abilities: val.abilities,
                   weight: val.weight,
@@ -92,5 +100,5 @@ export default function Home() {
 
 
     </div>
-    )
+  )
 }
