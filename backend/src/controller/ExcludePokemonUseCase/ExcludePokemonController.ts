@@ -10,11 +10,14 @@ class ExcludePokemonController {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
       const { id } = request.params;
-      // trazer id do usuário pelo token
 
-      // busca o pokemon
+      const { trainer_id } = request;
 
-      // if pokemon.trainer_id !== id no token => Não é possível excluir esse pokémon
+      const pokemon = await pokemonsRepositories.findOne({ id });
+
+      if (pokemon.trainer_id !== trainer_id) {
+        return response.status(401).json({ message: 'Você não possui autorização para isso!' });
+      }
 
       await pokemonsRepositories.delete(id);
 

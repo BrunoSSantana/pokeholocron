@@ -10,8 +10,7 @@ class FindCapturedPokemonsController {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
-      // Mudar quando o middleware estiver trazendo o trainer_id
-      const { trainer_id } = request.body;
+      const { trainer_id } = request;
 
       if (!trainer_id) {
         return response.status(401).json({ message: 'usuário não Autenticado' });
