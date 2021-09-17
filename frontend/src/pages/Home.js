@@ -46,17 +46,6 @@ export default function Home() {
   }
   getTypesPpokemons()
 
-
-  setPokemons(pokemons.sort(function (a,b) {
-    if (a.id > b.id) {
-      return 1
-    }
-    if (a.id < b.id) {
-      return -1
-    }
-    return 0
-  }))
-
   function filterById(pokemonId) {
     const newPokemons = []
 
