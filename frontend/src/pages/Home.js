@@ -107,7 +107,7 @@ export default function Home() {
           <select name="type" id="type" className={style.type} onChange={(e) => { setTypePokemon(e.target.value) }}>
             {types.map(type =>{
               return(<option key={type}>{type}</option> )
-            })}           
+            })}      
           </select>
         </div>
 
