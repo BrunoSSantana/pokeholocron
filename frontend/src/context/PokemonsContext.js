@@ -7,35 +7,32 @@ export default function PokemonsProvider({ children }) {
 
     const [pokemons, setPokemons] = useState([])
 
-    
+    async function getAllPokemons() {
+        const { data } = await Axios.get('https://pokeapi.co/api/v2/generation/1')
+        let pokes = [];
+
+
+        const promisseMap = data.pokemon_species.map(async pokemon => {
+            const res = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+            pokes.push(res.data);
+        });
+
+        await Promise.all(promisseMap);
+
+        setPokemons(pokes.sort(function (a,b) {
+            if (a.id > b.id) {
+              return 1
+            }
+            if (a.id < b.id) {
+              return -1
+            }
+            return 0
+          }));
+    }
 
     useEffect(() => {
-       async function Pokemons1g() {
-           const response = await Axios.get('https://pokeapi.co/api/v2/generation/1').then((response) => {
-                var namePolekemons = []
-                for (var i = 0; i < response.data.pokemon_species.length; i++) {
-                    namePolekemons.push(response.data.pokemon_species[i].name)
-                }
-                var final = []
-                for (var o = 0; o < namePolekemons.length; o++) {
-                    Axios.get(`https://pokeapi.co/api/v2/pokemon/${namePolekemons[o]}`).then((response) => {
-                        final.push(response.data)
-    
-                    })
-                }
-                setPokemons(final)
-            })
-        console.log('asd',response) }
-
-       
-        Pokemons1g()
-    }, [])
-
-    useEffect(() => {
-        console.log('aqui context: ', pokemons)
-    }, [setPokemons])
-
-
+        getAllPokemons()
+    }, []);
 
     return (
         <PokemonsContext.Provider value={{ pokemons, setPokemons }}>

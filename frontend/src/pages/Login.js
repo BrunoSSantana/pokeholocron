@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import styles from '../styles/stylePage/Login.module.scss'
+import { useHistory } from "react-router";
+import Axios from 'axios';
 
 export default function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const history = useHistory()
 
     function mostrarSenha() {
         var tipo = document.getElementById('senha')
@@ -18,17 +22,27 @@ export default function Login() {
         }
     }
 
-    function checkLogin(){
-        console.log(email)
+    function checkLogin() {
+        Axios.post('http://localhost:3003/signin', {
+            email: email,
+            password: password,
+        }).then((response) => {
+            if (response.data.message) {
+                //User Não encontrado
+                //falta receber o tratamento
+                alert('Email e/ou Senha incorretos')
+            } else {
+                //Usuário encontrado
+                localStorage.setItem('token', response.data.token)
+                history.push('/')
+            }
+        })
     }
-
 
     return (
         <div className={styles.container}>
             <div className={styles.imagem}>
-
             </div>
-
             <div className={styles.right}>
                 <div className={styles.login} >
                     <h1>Wellcome!</h1>
@@ -40,7 +54,6 @@ export default function Login() {
 
                     <div className={styles.LoginContainer}>
                         <div className={styles.iconSenha}>
-
                         </div>
                         <input type='password' id='senha' placeholder='Your password' onChange={(e) => { setPassword(e.target.value) }}></input>
                     </div>
@@ -51,14 +64,12 @@ export default function Login() {
                     </div>
 
                     <div className={styles.final}>
-                        <a href='/'><button className={styles.button1} onClick={checkLogin}>Login</button></a>
+                        <button className={styles.button1} onClick={checkLogin}>Login</button>
                         <a href='/Register'><button className={styles.button2} >Create account</button></a>
                     </div>
 
-
                 </div>
             </div>
-
         </div>
     )
 }

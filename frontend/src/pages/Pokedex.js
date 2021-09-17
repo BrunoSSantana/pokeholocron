@@ -1,37 +1,84 @@
-import { useEffect, useState, useContext } from 'react'
-import CardComponent from '../components/CardComponent'
+import { useEffect, useState } from 'react'
 import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
-import { PokemonsContext } from '../context/PokemonsContext';
+import CardPokedexComponent from '../components/CardPokedexComponent';
 
 export default function Pokedex() {
 
-
-
-
-
   const [name, setName] = useState('')
-
-  const {pokemons, setPokemons} = useContext(PokemonsContext)
-
- 
-
-
-  useEffect(() => {
-    console.log('aqui pokedex: ', pokemons)
-}, [setPokemons])
+  const [typePokemon, setTypePokemon] = useState('')
+  const [pokeId, setPokeId] = useState('')
+  const [myPokemons, SetMyPokemons] = useState([])
+  const [types, setTypes] = useState([])
 
 
+  async function FilterPokedex() {
+    const MyPokemons = await Axios.post('http://localhost:3003/myPokemons',
+      {},
+      {
+        headers: {
+          "authorization": `Bearer ${localStorage.getItem('token')}`,
+        }
+      })
 
-  function teste() {
-    var tipo = document.getElementById('name')
-    tipo.value = 'asdasd'
+    var final = []
+    var pokem = []
+
+    var arraytype = []
+    SetMyPokemons(MyPokemons.data.sort(function (a, b) {
+      if (Number(a.poke_id) > Number(b.poke_id)) {
+        return 1
+      }
+      if (Number(a.poke_id) < Number(b.poke_id)) {
+        return -1
+      }
+      return 0
+    }))
+
+    const data = MyPokemons.data
+
+    data.map(async mypokemons => { arraytype.push(mypokemons) })
+
+    arraytype.map(async (val) => { pokem.push(val.types) })
+
+    // pokem.map(async pok => {
+
+    //   console.log(pok);
+    //   const converter =await JSON.parse(pok)
+    //   console.log(converter);
+    //   //console.log('aqui:', JSON.parse(pok))
+    //   //final.push(converter)
+    // })
+
+    //pokem.push(valor)
+    // await Promise.all(arraytype);
+    //await pokem.push(converterType)
+    //console.log('MyPokemons', MyPokemons)
+    //console.log('MyPokemons', JSON.parse(MyPokemons.data[0].types))
+    //converterToArray(MyPokemons.data[0].types)
+    //JSON.parse()
+  }
+
+  async function getTypesPpokemons() {
+
+    const pokemonTypes = []
+
+    const { data } = await Axios.get('https://pokeapi.co/api/v2/type')
+    const types = data.results
+    types.forEach(type => pokemonTypes.push(type.name))
+    setTypes(pokemonTypes)
   }
 
 
-  return (
-    <div className={style.pokedex_container}>
+  useEffect(() => {
+    FilterPokedex()
+  }, [])
 
+console.log(types);
+
+  return (
+
+    <div className={style.pokedex_container}>
       <div className={style.header}>Pokedex</div>
 
       <div className={style.inputs}>
@@ -42,37 +89,47 @@ export default function Pokedex() {
 
         <div className={style.input}>
           <label htmlFor="type">Type:</label>
-          <select name="type" id="type" className={style.type}>
-            <option key='1'>planta</option>
+          <select
+            name="type"
+            id="type"
+            className={style.type}
+            onChange={(e) => { setTypePokemon(e.target.value) }}
+          >
+            {types.map(type => {
+              return (<option key={type}>{type}</option>)
+            })}
           </select>
         </div>
 
         <div className="input">
           <label htmlFor="">Id: </label>
-          <input type="text" id="pokeId" />
+          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }} />
         </div>
       </div>
-      <button onClick={teste}> teste </button>
 
 
       <div className={style.card_container}>
 
-        {pokemons.map((val) => {
+        {myPokemons.map((val) => {
+
           return (
             <div key={val.name}>
-              <CardComponent
-                poke_id={val.id}
-                name={val.name}
-                types={val.types}
-                img={val.sprites.front_default} />
-
+              <CardPokedexComponent
+                pokemon={{
+                  name: val.name,
+                  poke_id: val.poke_id,
+                  types: val.types,
+                  img: val.image,
+                  abilities: val.abilities,
+                  weight: val.weight,
+                  attack: val.attack,
+                  defense: val.defense,
+                  height: val.height
+                }}
+              />
             </div>
           )
         })}
-
-
-
-
 
       </div>
 

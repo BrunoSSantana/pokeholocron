@@ -3,7 +3,7 @@
   "port": 5432,
   "host": "localhost",
   "username": "postgres",
-  "password": "ordem66",
+  "password": "123",
   "database": "pokeholocron",
   "migrations": [
     "./src/database/migrations/*.ts"
