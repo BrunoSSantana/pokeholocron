@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Link } from "react-router-dom";
 import CardComponent from '../components/CardComponent';
@@ -11,6 +11,7 @@ export default function Home() {
   const [name, setName] = useState('')
   const [typePokemon, setTypePokemon] = useState('fire')
   const [pokeId, setPokeId] = useState('')
+  const [types, setTypes] = useState([])
 
   const { pokemons, setPokemons } = useContext(PokemonsContext)
 
@@ -33,6 +34,18 @@ export default function Home() {
 
 
   }
+
+  async function getTypesPpokemons() {
+
+    const pokemonTypes = []
+
+    const {data} = await Axios.get('https://pokeapi.co/api/v2/type')
+    const types = data.results
+    types.forEach(type => pokemonTypes.push(type.name))
+    setTypes(pokemonTypes)
+  }
+  getTypesPpokemons()
+
 
   setPokemons(pokemons.sort(function (a,b) {
     if (a.id > b.id) {
@@ -103,8 +116,9 @@ export default function Home() {
         <div className={style.input}>
           <label htmlFor="type">Type:</label>
           <select name="type" id="type" className={style.type} onChange={(e) => { setTypePokemon(e.target.value) }}>
-            <option key='fire'>fire</option>
-            <option key='bug'>bug</option>
+            {types.map(type =>{
+              return(<option key={type}>{type}</option> )
+            })}           
           </select>
         </div>
 
