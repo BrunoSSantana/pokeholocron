@@ -92,8 +92,8 @@ export default function Home() {
   return (
     <div className={style.pokedex_container}>
 
-      <div className={style.header}>All Pokemons</div>
-      <Link to='/pokedex'>go pokedex</Link>
+      <div className={style.header}>Pokemons 1º Generation</div>
+      <Link to='/pokedex'>Pokedex</Link>
 
       <div className={style.inputs}>
         <div className="input">
