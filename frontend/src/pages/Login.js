@@ -27,16 +27,13 @@ export default function Login() {
             email: email,
             password: password,
         }).then((response) => {
-            if (!response.data) {
+            if (response.data.message) {
                 //User Não encontrado
                 //falta receber o tratamento
-                alert('Usuário, email e/ou senha ja existem')
+                alert('Email e/ou Senha incorretos')
             } else {
                 //Usuário encontrado
                 localStorage.setItem('token', response.data.token)
-                localStorage.setItem('email', response.data.trainer.email)
-                localStorage.setItem('id', response.data.trainer.id)
-                localStorage.setItem('nick_name', response.data.trainer.nick_name)
                 history.push('/')
             }
         })

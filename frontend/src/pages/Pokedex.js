@@ -11,29 +11,51 @@ export default function Pokedex() {
   const [pokemonsf, SetPokemonsf] = useState([])
 
   async function FilterPokedex() {
-   const MyPokemons= await Axios.post('http://localhost:3003/myPokemons', {
-      trainer_id: localStorage.getItem('id'),
-    })
+    const MyPokemons = await Axios.post('http://localhost:3003/myPokemons',
+      {},
+      {
+        headers: {
+          "authorization": `Bearer ${localStorage.getItem('token')}`,
+        }
+      })
 
-    
+    var final = []
+    var pokem = []
+
+    var arraytype = []
     SetPokemonsf(MyPokemons.data)
 
+    const data = MyPokemons.data
 
-   console.log('MyPokemons', JSON.parse(MyPokemons.data[0].types))
+    data.map(async mypokemons => { await arraytype.push(mypokemons) })
+
+    arraytype.map(async (val) => { await pokem.push(val.types) })
+
+    pokem.map(async pok => {
+
+      const converter = await JSON.parse(pok)
+      //console.log('aqui:', JSON.parse(pok))
+      //final.push(converter)
+    })
+
+    //pokem.push(valor)
+    // await Promise.all(arraytype);
+    //await pokem.push(converterType)
+    //console.log('MyPokemons', MyPokemons)
+    //console.log('MyPokemons', JSON.parse(MyPokemons.data[0].types))
     //converterToArray(MyPokemons.data[0].types)
-
-   //JSON.parse()
+    //JSON.parse()
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     FilterPokedex()
-  },[])
+  }, [])
 
 
 
   return (
-    
+
     <div className={style.pokedex_container}>
       <div className={style.header}>Pokedex</div>
 
@@ -56,12 +78,10 @@ export default function Pokedex() {
         </div>
       </div>
 
-      <button onClick={FilterPokedex}>FilterPokedex</button>
-
 
       <div className={style.card_container}>
 
-      {pokemonsf.map((val) => {
+        {pokemonsf.map((val) => {
           return (
             <div key={val.name}>
               <CardPokedexComponent

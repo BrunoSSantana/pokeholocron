@@ -11,6 +11,7 @@ export default function PokemonsProvider({ children }) {
         const { data } = await Axios.get('https://pokeapi.co/api/v2/generation/1')
         let pokes = [];
 
+
         const promisseMap = data.pokemon_species.map(async pokemon => {
             const res = await Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
             pokes.push(res.data);

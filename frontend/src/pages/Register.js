@@ -23,22 +23,27 @@ export default function Register() {
         }
     }
 
-    function register() {
-        Axios.post('http://localhost:3003/SignUp', {
-            nick_name: name,
-            email: email,
-            password: password,
-        }).then((response) => {
-            if (!response.data) {
-                //Ja existe user
-                //falta receber o tratamento
-                alert('Usuário, email e/ou senha ja existem')
+    async function register() {
+        try {
+            const response = await Axios.post('http://localhost:3003/SignUp', {
+                nick_name: name,
+                email: email,
+                password: password,
+            })
+            if (response.data.message) {
+                //User Não encontrado
+                alert('Usuário e/ou Email ja existem')
             } else {
-                //Novo Usuário único 
+                //Usuário encontrado
+                localStorage.setItem('token', response.data.token)
                 history.push('/login')
             }
 
-        })
+        } catch (error) {
+            return console.log('asdaa')
+
+        }
+
     }
 
     return (

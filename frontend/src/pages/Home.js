@@ -15,17 +15,16 @@ export default function Home() {
 
     function FilterPokedex(){
         Axios.post('http://localhost:3003/pokemons/filter', {
-            type:typePokemon, 
+            token:typePokemon, 
             poke_id:pokeId, 
             name:name,
-        }).then((response) => { 
-          console.log(response)          
+        }).then((response) => {          
             if (!response.data) {
-                //User Não encontrado
+                //Filter Não encontrado
                 //falta receber o tratamento
-                alert('Usuário, email e/ou senha ja existem')
+                alert('')
             }else {
-                //Usuário encontrado
+                //Filter encontrado
                 alert('Foi')
                 
             }

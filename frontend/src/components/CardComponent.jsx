@@ -26,6 +26,10 @@ export default function CardComponent({ pokemon }) {
     //função para salvar no banco
     Axios.post('http://localhost:3003/pokemons', {
       poke_id: poke_id, name: name, types: types, image: img, weight: weight, height:height, attack: attack, defense: defense, abilities: abilities, trainer_id: localStorage.getItem('id'),
+        },{
+          headers: {
+            "authorization": `Bearer ${localStorage.getItem('token')}`,
+          }
         }).then((response) => {      
           console.log('adicionou o types: ', response)  
             if (!response.data) {
@@ -69,18 +73,7 @@ export default function CardComponent({ pokemon }) {
           <h3>{name}</h3>
 
           <div className={style.poke_type}>
-            <span>
-              {types.map((type, index) => (
-                <p
-                  key={index}
-                  style={{
-                    background: SetTypeColor(type.type.name)
-                  }}
-                >
-                  {type.type.name}
-                </p>
-              ))}
-            </span>
+            
           </div>
 
           <button onClick={handleCatch}>

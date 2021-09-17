@@ -5,7 +5,6 @@ import { getCustomRepository } from 'typeorm';
 import { PokemonsRepositories } from '../../repositories/PokemonsRepositories';
 
 interface IAddPokemonRequest {
-  trainer_id: string,
   poke_id: number,
   name: string,
   types: string[],
@@ -22,6 +21,8 @@ class AddPokemonControler {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
+      const { trainer_id } = request;
+
       const {
         poke_id,
         name,
@@ -32,7 +33,6 @@ class AddPokemonControler {
         attack,
         defense,
         abilities,
-        trainer_id,
       }: IAddPokemonRequest = request.body;
 
       if (name.trim() === '' || image.trim() === '' || trainer_id.trim() === '') {

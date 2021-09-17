@@ -8,13 +8,12 @@ class SignUp {
     async store(req: Request, res: Response) {
         const repository = getRepository(Trainer);
         const { nick_name, email, password } = req.body;
-        console.log(nick_name)
 
         const trainerExist = await repository.findOne({ where: { email } });
 
         // limitando para nao repetir email
         if (trainerExist) {
-            return res.sendStatus(409);
+            return res.json({ message: 'usuário já existe' }).status(401);
         }
 
         const trainer = repository.create({ nick_name, email, password });
