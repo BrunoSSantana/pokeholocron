@@ -9,19 +9,19 @@ class ExcludePokemonController {
     try {
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
-      const { id } = request.params;
+      const { poke_id } = request.body;
 
       const { trainer_id } = request;
 
-      const pokemon = await pokemonsRepositories.findOne({ id });
+      const pokemon = await pokemonsRepositories.findOne({ where: { trainer_id, poke_id } });
 
       if (pokemon.trainer_id !== trainer_id) {
         return response.status(401).json({ message: 'Você não possui autorização para isso!' });
       }
 
-      await pokemonsRepositories.delete(id);
+      await pokemonsRepositories.delete(pokemon.id);
 
-      return response.send();
+      return response.status(200).json({ message: `${pokemon.name} exluído com sucesso!` });
     } catch (error) {
       return response.status(500).json({
         status: 'error',
