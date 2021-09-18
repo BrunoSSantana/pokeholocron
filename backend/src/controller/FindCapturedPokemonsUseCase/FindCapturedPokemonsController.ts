@@ -4,18 +4,13 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { PokemonsRepositories } from '../../repositories/PokemonsRepositories';
-import {Pokemon} from "../../entities/Pokemon";
-import { getRepository } from 'typeorm'
-import {getConnection} from "typeorm";
 
 class FindCapturedPokemonsController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-
       const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
 
       const { trainer_id } = request;
-      
 
       if (!trainer_id) {
         return response.status(401).json({ message: 'usuário não Autenticado' });

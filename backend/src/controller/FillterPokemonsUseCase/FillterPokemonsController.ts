@@ -23,7 +23,7 @@ class FillterPokemonsController {
         query.andWhere('pokemons.poke_id = :poke_id', { poke_id });
       }
 
-      if (name.trim() !== '') {
+      if (name) {
         query.andWhere('pokemons.name = :name', { name });
       }
 
