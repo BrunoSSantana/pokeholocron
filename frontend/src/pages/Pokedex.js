@@ -75,6 +75,8 @@ export default function Pokedex() {
     <div className={style.pokedex_container}>
       <div className={style.header}>Pokedex</div>
 
+      <Link to='/'>Pokemons 1st Gen</Link>
+
       <div className={style.inputs}>
         <div className="input">
           <label htmlFor="name">Name: </label>
@@ -101,7 +103,6 @@ export default function Pokedex() {
         </div>
       </div>
 
-      <Link to='/'>Pokemons 1st Gen</Link>
       <div className={style.card_container}>
 
         {myPokemons.map((val) => {
