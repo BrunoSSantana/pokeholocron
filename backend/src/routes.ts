@@ -22,8 +22,8 @@ routes.post('/signin', Signin.authenticate);
 
 routes
   .post('/pokemons', ensureAuthenticated, addPokemonControler.handle)
-  .post('/myPokemons', ensureAuthenticated, findCapturedPokemonsController.handle)
-  .get('/pokemons/filter', ensureAuthenticated, fillterPokemonsController.handle)
+  .get('/myPokemons', ensureAuthenticated, findCapturedPokemonsController.handle)
+  .post('/pokemons/filter', ensureAuthenticated, fillterPokemonsController.handle)
   .get('/pokemons/:poke_id', detailsPokemonController.handle)
   .delete('/pokemons', ensureAuthenticated, excludePokemonController.handle);
 
