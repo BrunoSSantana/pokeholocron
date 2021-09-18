@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
+import { api } from '../services/api'
 import CardPokedexComponent from '../components/CardPokedexComponent';
 
 export default function Pokedex() {
@@ -8,91 +9,65 @@ export default function Pokedex() {
   const [name, setName] = useState('')
   const [typePokemon, setTypePokemon] = useState('')
   const [pokeId, setPokeId] = useState('')
+
   const [myPokemons, SetMyPokemons] = useState([])
   const [types, setTypes] = useState([])
 
-
-  async function FilterPokedex() {
-    const MyPokemons = await Axios.post('http://localhost:3003/myPokemons',
-      {},
-      {
-        headers: {
-          "authorization": `Bearer ${localStorage.getItem('token')}`,
-        }
-      })
-
-
-    SetMyPokemons(MyPokemons.data.sort(function (a, b) {
-      if (a.name > b.name) {
-        return 1
-      }
-      if (a.name < b.name) {
-        return -1
-      }
-      return 0
-    }))
-
-  }
-
-  async function getTypesPpokemons() {
-
-    const pokemonTypes = []
-
-    const { data } = await Axios.get('https://pokeapi.co/api/v2/type')
-    const types = data.results
-    console.log(types);
-    types.forEach(type => pokemonTypes.push(type.name))
-    setTypes(pokemonTypes)
-  }
-  getTypesPpokemons()
-
-  function filterById(pokemonId) {
-    const newPokemons = []
-
-    myPokemons.map(pokemon => {
-
-        if (pokemon.id === pokemonId) {
-          newPokemons.push(pokemon)
-        }
-
-    })
-
-    SetMyPokemons(newPokemons);
-  }
-
-  function filterByName(pokemonName) {
-    const newPokemons = []
-
-    myPokemons.map(pokemon => {
-
-        if (pokemon.name === pokemonName.toLowerCase()) {
-          newPokemons.push(pokemon)
-        }
-
-    })
-
-    SetMyPokemons(newPokemons);
-  }
-
-  function filterByType(filter) {
-
-    const newPokemons = []
-
-    myPokemons.map(pokemon => {
-      pokemon.types.map(slot => {
-        if (slot.type.name === filter) {
-          newPokemons.push(pokemon)
-        }
-      })
-    })
-
-    SetMyPokemons(newPokemons);
-  }
-  
   useEffect(() => {
-    FilterPokedex()
-  }, [name])
+    async function FilterAllPokedex() {
 
+      api.get('myPokemons').then(({ data }) => {
+        SetMyPokemons(data.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1
+          }
+          if (a.name < b.name) {
+            return -1
+          }
+          return 0
+        }));
+      }).catch((error) => {
+        console.error(error)
+      })
+
+    }
+
+    async function getTypesPpokemons() {
+
+      const pokemonTypes = []
+
+      const { data } = await Axios.get('https://pokeapi.co/api/v2/type')
+      const types = data.results
+      types.push('')
+      types.forEach(type => pokemonTypes.push(type.name))
+      setTypes(pokemonTypes)
+    }
+
+    FilterAllPokedex()
+    getTypesPpokemons()
+  }, [])
+
+  useEffect(() => {
+
+    async function FilterPokedex() {
+      api.post('pokemons/filter',
+        { poke_id: pokeId, type: typePokemon, name },
+      ).then((MyPokemons) => {
+
+        SetMyPokemons(MyPokemons.data.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1
+          }
+          if (a.name < b.name) {
+            return -1
+          }
+          return 0
+        }))
+      })
+    }
+
+    FilterPokedex()
+  }, [name, typePokemon, pokeId])
 
   return (
 
@@ -150,7 +125,6 @@ export default function Pokedex() {
         })}
 
       </div>
-
 
     </div>
   )
