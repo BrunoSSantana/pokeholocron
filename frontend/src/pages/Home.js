@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Axios from 'axios';
 import { Link } from "react-router-dom";
 import CardComponent from '../components/CardComponent';
@@ -12,81 +12,78 @@ export default function Home() {
   const [pokeId, setPokeId] = useState('')
   const [types, setTypes] = useState([])
 
-  const { pokemons, setPokemons } = useContext(PokemonsContext)
+  const { pokemons } = useContext(PokemonsContext)
 
-  function FilterPokedex() {
-    // Axios.post('http://localhost:3003/pokemons/filter', {
-    //   token: typePokemon,
-    //   poke_id: pokeId,
-    //   name: name,
-    // }).then((response) => {
-    //   if (!response.data) {
-    //     //Filter Não encontrado
-    //     //falta receber o tratamento
-    //     alert('')
-    //   } else {
-    //     //Filter encontrado
-    //     alert('Foi')
+  useEffect(() => {
+    async function getTypesPpokemons() {
 
-    //   }
-    // })
+      const pokemonTypes = []
 
+      const { data } = await Axios.get('https://pokeapi.co/api/v2/type')
+      const types = data.results
+      types.forEach(type => pokemonTypes.push(type.name))
+      setTypes(pokemonTypes)
+    }
+    getTypesPpokemons()
+  }, [])
 
-  }
+  // useEffect(() => {
+  //   function filterByName() {
+  //     console.log(name);
+  // const newPokemons = pokemons.filter(pokemon => {
+  //   return pokemon.name.startsWith(name.toLowerCase())
+  // })
 
-  async function getTypesPpokemons() {
+  //   }
+  //   filterByName()
 
-    const pokemonTypes = []
+  // }, [name])
 
-    const {data} = await Axios.get('https://pokeapi.co/api/v2/type')
-    const types = data.results
-    types.forEach(type => pokemonTypes.push(type.name))
-    setTypes(pokemonTypes)
-  }
-  getTypesPpokemons()
+  
+  let newPokemons = useMemo(()=> {
+    const lowerName = name.toLowerCase()
 
-  function filterById(pokemonId) {
-    const newPokemons = []
+    return pokemons.filter(pokemon => {
+      return pokemon.name.includes(lowerName)
+    })
+  }, [name, pokemons])
 
-    pokemons.map(pokemon => {
+  // useEffect(() => {
+  //   function filterByType() {
 
-        if (pokemon.id === pokemonId) {
-          newPokemons.push(pokemon)
-        }
+  //     const newPokemons = []
 
+  //     pokemons.forEach(pokemon => {
+  //       pokemon.types.forEach(slot => {
+  //         if (slot.type.name === typePokemon) {
+  //           newPokemons.push(pokemon)
+  //         }
+  //       })
+  //     })
+
+  //     setPokemons(newPokemons);
+  //   }
+
+  //   filterByType()
+
+  // }, [typePokemon])
+
+  // useEffect(() => {
+  //   function filterById() {
+  //     const newPokemons = []
+
+  newPokemons = useMemo(() =>{
+    return pokemons.filter(pokemon => {
+      return pokemon.id === pokeId
     })
 
-    setPokemons(newPokemons);
-  }
+  },[pokeId, pokemons]) 
 
-  function filterByName(pokemonName) {
-    const newPokemons = []
+  //     setPokemons(newPokemons);
+  //   }
+  //   filterById()
 
-    pokemons.map(pokemon => {
-
-        if (pokemon.name === pokemonName.toLowerCase()) {
-          newPokemons.push(pokemon)
-        }
-
-    })
-
-    setPokemons(newPokemons);
-  }
-
-  function filterByType(filter) {
-
-    const newPokemons = []
-
-    pokemons.map(pokemon => {
-      pokemon.types.map(slot => {
-        if (slot.type.name === filter) {
-          newPokemons.push(pokemon)
-        }
-      })
-    })
-
-    setPokemons(newPokemons);
-  }
+  // }, [pokeId])
 
 
   return (
@@ -98,38 +95,35 @@ export default function Home() {
       <div className={style.inputs}>
         <div className="input">
           <label htmlFor="name">Name:</label>
-          <input type="text" id="name" onChange={(e) => { setName(e.target.value) }} />
+          <input type="text" id="name" value={name} onChange={(e) => { setName(e.target.value) }} />
         </div>
 
         <div className={style.input}>
           <label htmlFor="type">Type:</label>
-          <select name="type" id="type" className={style.type} onChange={(e) => { setTypePokemon(e.target.value) }}>
-            {types.map(type =>{
-              return(<option key={type}>{type}</option> )
-            })}      
+          <select name="type" id="type" className={style.type} value={typePokemon} onChange={(e) => { setTypePokemon(e.target.value) }}>
+            {types.map(type => {
+              return (<option key={type}>{type}</option>)
+            })}
           </select>
         </div>
 
         <div className="input">
           <label htmlFor="">Id: </label>
-          <input type="text" id="pokeId" onChange={(e) => { setPokeId(e.target.value) }} />
+          <input type="text" id="pokeId" value={pokeId} onChange={(e) => { setPokeId(e.target.value) }} />
         </div>
       </div>
 
-      <button onClick={FilterPokedex}>Search</button>
-
-
       <div className={style.card_container}>
 
-        {pokemons.map((val) => {
+        {newPokemons.map((val) => {
           const types = []
           const abilities = []
 
-          val.types.map(slot => {
+          val.types.forEach(slot => {
             types.push(slot.type.name)
           })
 
-          val.abilities.map(slot => {
+          val.abilities.forEach(slot => {
             abilities.push(slot.ability.name)
           })
 
