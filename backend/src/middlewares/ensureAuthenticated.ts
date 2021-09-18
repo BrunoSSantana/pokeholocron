@@ -14,13 +14,13 @@ export function ensureAuthenticated(
   response: Response,
   next: NextFunction,
 ): any {
-  const token = request.headers.authorization.split(' ')[1];
-
-  if (!token) {
-    return response.status(401).end();
-  }
-
   try {
+    const token = request.headers.authorization.split(' ')[1];
+
+    if (!token) {
+      return response.status(401).end();
+    }
+
     const { id } = verify(
       token,
       process.env.SECRET_kEY,
