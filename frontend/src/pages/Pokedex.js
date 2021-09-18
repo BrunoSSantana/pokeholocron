@@ -3,6 +3,7 @@ import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
 import { api } from '../services/api'
 import CardPokedexComponent from '../components/CardPokedexComponent';
+import { Link } from 'react-router-dom';
 
 export default function Pokedex() {
 
@@ -100,7 +101,7 @@ export default function Pokedex() {
         </div>
       </div>
 
-
+      <Link to='/'>Pokemons 1st Gen</Link>
       <div className={style.card_container}>
 
         {myPokemons.map((val) => {
