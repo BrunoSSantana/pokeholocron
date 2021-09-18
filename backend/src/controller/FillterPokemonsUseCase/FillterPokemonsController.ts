@@ -1,39 +1,33 @@
 /* eslint-disable camelcase */
 /* eslint-disable class-methods-use-this */
 import { Request, Response } from 'express';
-import { getCustomRepository, getManager } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import { PokemonsRepositories } from '../../repositories/PokemonsRepositories';
 
 class FillterPokemonsController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { type, poke_id, name } = request.body;
-      const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
+      const { trainer_id } = request;
 
-      const query = pokemonsRepositories.createQueryBuilder('pokemons');
+      const pokemonsRepositories = getCustomRepository(PokemonsRepositories);
+      const query = pokemonsRepositories
+        .createQueryBuilder('pokemons')
+        .where('pokemons.trainer_id = :trainer_id', { trainer_id });
 
       if (type) {
-        const entityManager = getManager();
-        const Newquery = entityManager
-          .query(
-            `SELECT *
-            FROM pokemons 
-            WHERE types @> 
-            ARRAY['${type}']::varchar[]`,
-          );
-        const pokeFilter = await Newquery;
-        return response.json(pokeFilter);
+        query.andWhere('types @> ARRAY[:type]::varchar[]', { type });
       }
 
       if (poke_id) {
-        query.where('pokemons.poke_id = :poke_id', { poke_id });
+        query.andWhere('pokemons.poke_id = :poke_id', { poke_id });
       }
 
-      if (name) {
-        query.where('pokemons.name = :name', { name });
+      if (name.trim() !== '') {
+        query.andWhere('pokemons.name = :name', { name });
       }
 
-      const pokeFilter = await query.getOne();
+      const pokeFilter = await query.getMany();
 
       return response.json(pokeFilter);
     } catch (error) {
