@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Axios from 'axios';
 import { Link } from "react-router-dom";
 import CardComponent from '../components/CardComponent';
@@ -27,141 +27,103 @@ export default function Home() {
     getTypesPpokemons()
   }, [])
 
-  // useEffect(() => {
-  //   function filterByName() {
-  //     console.log(name);
-  // const newPokemons = pokemons.filter(pokemon => {
-  //   return pokemon.name.startsWith(name.toLowerCase())
-  // })
+  let newPokemons
 
-  //   }
-  //   filterByName()
+  const lowerName = name.toLowerCase()
+  newPokemons = pokemons.filter(pokemon => {
+    return pokemon.name.includes(lowerName)
+  })
 
-  // }, [name])
-  
-
-  let newPokemons = useMemo(() => {
-    const lowerName = name.toLowerCase()
-
-    return pokemons.filter(pokemon => {
-      return pokemon.name.includes(lowerName)
-    })
-  }, [name, pokemons])
+  if (pokeId) {
+    newPokemons = pokemons.filter(pokemon => pokemon.id === Number(pokeId))
+  }
 
 
-  // newPokemons = useMemo(() => {
-
-  //   return pokemons.filter(pokemon => {
-  //     return pokemon.id === Number(pokeId)
-  //   })
-
-
-  // }, [pokeId, pokemons])
-
-
-
-
-  // useEffect(() => {
-  //   function filterByType() {
-
-  // const filtraPorTipo = pokemon => {
-  //   // console.log(pokemon.name);
-  //   return pokemon.types.forEach(slot => {
-  //     console.log(slot.type.name);
-  //     if (slot.type.name === typePokemon) {
+  // if (typePokemon) {
+  //   console.log(typePokemon);
+  //   const filtraPorTipo = pokemon => {
+  //     const type = []
+  //     pokemon.types.forEach(slot => {
+  //       if (slot.type.name === typePokemon) {
+  //         console.log(slot.type.name);
+  //         type.push('fire')
+  //       }
+  //     })
+  //     console.log(type);
+  //     if (type.includes(type)){
+  //       console.log('eita');
   //       return true
   //     }
-  //   })
-    
+
+
+  //   }
+
+  //   newPokemons = pokemons.filter(filtraPorTipo)
   // }
 
-  // let newPokemons = pokemons.filter(filtraPorTipo)
+  return (
+    <div className={style.pokedex_container}>
 
-  // setPokemons(newPokemons);
-// }
+      <div className={style.header}>Pokemons 1º Generation</div>
+      <Link to='/pokedex'>Pokedex</Link>
 
-//   filterByType()
+      <div className={style.inputs}>
+        <div className="input">
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name" value={name} onChange={(e) => { setName(e.target.value) }} />
+        </div>
 
-// }, [typePokemon])
+        <div className={style.input}>
+          <label htmlFor="type">Type:</label>
+          <select name="type" id="type" className={style.type} value={typePokemon} onChange={(e) => { setTypePokemon(e.target.value) }}>
+            {types.map(type => {
+              return (<option key={type}>{type}</option>)
+            })}
+          </select>
+        </div>
 
-// useEffect(() => {
-//   function filterById() {
-//     const newPokemons = []
-
-
-
-
-
-//     setPokemons(newPokemons);
-//   }
-//   filterById()
-
-// }, [pokeId])
-
-
-return (
-  <div className={style.pokedex_container}>
-
-    <div className={style.header}>Pokemons 1º Generation</div>
-    <Link to='/pokedex'>Pokedex</Link>
-
-    <div className={style.inputs}>
-      <div className="input">
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" value={name} onChange={(e) => { setName(e.target.value) }} />
+        <div className="input">
+          <label htmlFor="">Id: </label>
+          <input type="text" id="pokeId" value={pokeId} onChange={(e) => { setPokeId(e.target.value) }} />
+        </div>
       </div>
 
-      <div className={style.input}>
-        <label htmlFor="type">Type:</label>
-        <select name="type" id="type" className={style.type} value={typePokemon} onChange={(e) => { setTypePokemon(e.target.value) }}>
-          {types.map(type => {
-            return (<option key={type}>{type}</option>)
-          })}
-        </select>
+      <div className={style.card_container}>
+
+        {newPokemons.map((val) => {
+          const types = []
+          const abilities = []
+
+          val.types.forEach(slot => {
+            types.push(slot.type.name)
+          })
+
+          val.abilities.forEach(slot => {
+            abilities.push(slot.ability.name)
+          })
+
+          return (
+            <div key={val.name}>
+              <CardComponent
+                pokemon={{
+                  name: val.name,
+                  poke_id: val.id,
+                  types,
+                  img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${val.id}.svg`,
+                  abilities,
+                  weight: val.weight,
+                  attack: val.stats[1].base_stat,
+                  defense: val.stats[2].base_stat,
+                  height: val.height
+                }}
+              />
+            </div>
+          )
+        })}
+
       </div>
 
-      <div className="input">
-        <label htmlFor="">Id: </label>
-        <input type="text" id="pokeId" value={pokeId} onChange={(e) => { setPokeId(e.target.value) }} />
-      </div>
-    </div>
-
-    <div className={style.card_container}>
-
-      {newPokemons.map((val) => {
-        const types = []
-        const abilities = []
-
-        val.types.forEach(slot => {
-          types.push(slot.type.name)
-        })
-
-        val.abilities.forEach(slot => {
-          abilities.push(slot.ability.name)
-        })
-
-        return (
-          <div key={val.name}>
-            <CardComponent
-              pokemon={{
-                name: val.name,
-                poke_id: val.id,
-                types,
-                img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${val.id}.svg`,
-                abilities,
-                weight: val.weight,
-                attack: val.stats[1].base_stat,
-                defense: val.stats[2].base_stat,
-                height: val.height
-              }}
-            />
-          </div>
-        )
-      })}
 
     </div>
-
-
-  </div>
-)
+  )
 }
