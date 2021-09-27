@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import style from '../styles/stylePage/Pokedex.module.scss'
 import Axios from 'axios';
 import CardPokedexComponent from '../components/CardPokedexComponent';
+import CardComponent from '../components/CardComponent';
+import { useHistory } from "react-router";
 
 export default function Pokedex() {
 
@@ -10,6 +12,8 @@ export default function Pokedex() {
   const [pokeId, setPokeId] = useState('')
   const [myPokemons, SetMyPokemons] = useState([])
   const [types, setTypes] = useState([])
+
+  const history = useHistory()
 
 
   async function FilterPokedex() {
@@ -21,42 +25,17 @@ export default function Pokedex() {
         }
       })
 
-    var final = []
-    var pokem = []
 
-    var arraytype = []
     SetMyPokemons(MyPokemons.data.sort(function (a, b) {
-      if (Number(a.poke_id) > Number(b.poke_id)) {
+      if (a.name > b.name) {
         return 1
       }
-      if (Number(a.poke_id) < Number(b.poke_id)) {
+      if (a.name < b.name) {
         return -1
       }
       return 0
     }))
 
-    const data = MyPokemons.data
-
-    data.map(async mypokemons => { arraytype.push(mypokemons) })
-
-    arraytype.map(async (val) => { pokem.push(val.types) })
-
-    // pokem.map(async pok => {
-
-    //   console.log(pok);
-    //   const converter =await JSON.parse(pok)
-    //   console.log(converter);
-    //   //console.log('aqui:', JSON.parse(pok))
-    //   //final.push(converter)
-    // })
-
-    //pokem.push(valor)
-    // await Promise.all(arraytype);
-    //await pokem.push(converterType)
-    //console.log('MyPokemons', MyPokemons)
-    //console.log('MyPokemons', JSON.parse(MyPokemons.data[0].types))
-    //converterToArray(MyPokemons.data[0].types)
-    //JSON.parse()
   }
 
   async function getTypesPpokemons() {
@@ -65,25 +44,75 @@ export default function Pokedex() {
 
     const { data } = await Axios.get('https://pokeapi.co/api/v2/type')
     const types = data.results
+    console.log(types);
     types.forEach(type => pokemonTypes.push(type.name))
     setTypes(pokemonTypes)
   }
 
+  function filterById(pokemonId) {
+    const newPokemons = []
 
+    myPokemons.map(pokemon => {
+
+        if (pokemon.id === pokemonId) {
+          newPokemons.push(pokemon)
+        }
+
+    })
+
+    SetMyPokemons(newPokemons);
+  }
+
+  function filterByName(pokemonName) {
+    const newPokemons = []
+
+    myPokemons.map(pokemon => {
+
+        if (pokemon.name === pokemonName.toLowerCase()) {
+          newPokemons.push(pokemon)
+        }
+
+    })
+
+    SetMyPokemons(newPokemons);
+  }
+
+  function filterByType(filter) {
+
+    const newPokemons = []
+
+    myPokemons.map(pokemon => {
+      pokemon.types.map(slot => {
+        if (slot.type.name === filter) {
+          newPokemons.push(pokemon)
+        }
+      })
+    })
+
+    SetMyPokemons(newPokemons);
+  }
+  
   useEffect(() => {
     FilterPokedex()
-  }, [])
+  }, [name])
 
-console.log(types);
+  function sair(){
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('token');
+    history.push('/login')
+  }
+
 
   return (
 
     <div className={style.pokedex_container}>
       <div className={style.header}>Pokedex</div>
+      <button onClick={sair}>Sair</button>
+      <a href='/'><button >All Pokemons</button></a>
 
       <div className={style.inputs}>
         <div className="input">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Name: </label>
           <input type="text" id="name" onChange={(e) => { setName(e.target.value) }} />
         </div>
 

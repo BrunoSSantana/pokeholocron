@@ -3,7 +3,7 @@ import style from '../styles/styleComponent/CardComponent.module.scss'
 import { SetTypeColor } from '../utils/SetTypeColor'
 import Axios from 'axios';
 
-export default function CardPokedexComponent({ pokemon }) {
+export default function CardComponent({ pokemon }) {
   const divFlipHover = useRef(null);
   const cardBackRef = useRef(null);
   const innerRef = useRef(null);
@@ -20,27 +20,24 @@ export default function CardPokedexComponent({ pokemon }) {
     height
   } = pokemon
 
- 
-
   const cardBackgroundColor = `${SetTypeColor(types[0])}99`;
 
-  async function handleCatch() {
+  async function deletar() {
+    console.log('deletar')
     //função para salvar no banco
-
-
-
-    Axios.post('http://localhost:3003/pokemons', {
-      poke_id: poke_id, name: name, types: types, image: img, weight: weight, height:height, attack: attack, defense: defense, abilities: abilities, trainer_id: localStorage.getItem('id'),
-        }).then((response) => {  
-     
-            
+    Axios.post(`http://localhost:3003/pokemons/${poke_id}`, {
+        },{
+          headers: {
+            "authorization": `Bearer ${localStorage.getItem('token')}`,
+          }
+        }).then((response) => {      
             if (!response.data) {
                 //pokemon error
                 //falta receber o tratamento
                 alert('Usuário, email e/ou senha ja existem')
             }else {
                 //pokemon adicionado
-                alert('você capturou o:  ' + response.data.name)
+                alert('você apagou o:  ' + response.data.name)
             }
         })
 
@@ -75,13 +72,24 @@ export default function CardPokedexComponent({ pokemon }) {
           <h3>{name}</h3>
 
           <div className={style.poke_type}>
-          
+            <span>
+              {types.map((type, index) => (
+                <p
+                  key={index}
+                  style={{
+                    background: SetTypeColor(type)
+                  }}
+                >
+                  {type}
+                </p>
+              ))}
+            </span>
           </div>
 
-          <button onClick={handleCatch}>
+          <button onClick={deletar}>
             <img src="https://img.icons8.com/external-those-icons-lineal-color-those-icons/48/000000/external-pokeball-video-games-those-icons-lineal-color-those-icons.png" alt="pokebola" />
             <div className={style.buttonLegend}>
-              Capturar
+              Deletar
             </div>
           </button>
         </div>
@@ -110,7 +118,11 @@ export default function CardPokedexComponent({ pokemon }) {
             </div>
 
             <strong>Habilidades: </strong>
-            
+            {abilities.map((ability, index) => (
+              <div className={style.attribute} key={index}>
+                <p>{ability}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

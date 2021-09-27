@@ -40,7 +40,7 @@ export default function CardComponent({ pokemon }) {
             "authorization": `Bearer ${localStorage.getItem('token')}`,
           }
         }).then((response) => {      
-          console.log('adicionou o types: ', response)  
+          console.log('adicionou o types: ', defense)  
             if (!response.data) {
                 //pokemon error
                 //falta receber o tratamento
@@ -82,7 +82,18 @@ export default function CardComponent({ pokemon }) {
           <h3>{name}</h3>
 
           <div className={style.poke_type}>
-            
+            <span>
+              {types.map((type, index) => (
+                <p
+                  key={index}
+                  style={{
+                    background: SetTypeColor(type)
+                  }}
+                >
+                  {type}
+                </p>
+              ))}
+            </span>
           </div>
 
           <button onClick={handleCatch}>
