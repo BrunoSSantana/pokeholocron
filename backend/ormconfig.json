@@ -2,8 +2,8 @@
   "type": "postgres",
   "port": 5432,
   "host": "localhost",
-  "username": "postgres",
-  "password": "123",
+  "username": "docker",
+  "password": "ignite",
   "database": "pokeholocron",
   "migrations": [
     "./src/database/migrations/*.ts"
