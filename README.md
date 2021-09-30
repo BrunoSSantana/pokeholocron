@@ -30,13 +30,7 @@
   <a href="#-license">License</a>
 </p>
 
-<p id="insomniaButton" align="center">
-  <a href="" target="_blank">
-    <img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia">
-  </a>
-</p>
-
-<img alt="Layout" src="https://res.cloudinary.com/eliasgcf/image/upload/v1586302738/assets/previewApp_fnt7hm.png">
+<img alt="Layout" src="frontend/src/assets/ex.png">
 
 ## 👨🏻‍💻 About the project
 
@@ -77,15 +71,7 @@ Technologies that we used to develop this api
 - [Nodemon](https://nodemon.io/)
 - [ReactJS](https://reactjs.org/)
 - [Eslint](https://eslint.org/)
-- [Expo](https://expo.io/)
-- [Celebrate](https://github.com/arb/celebrate)
-- [SuperTest](https://github.com/visionmedia/supertest)
-- [Sucrase](https://github.com/alangpierce/sucrase)
 - [React Router DOM](https://reacttraining.com/react-router/)
-- [React Navigation](https://reactnavigation.org/)
-- [React Icons](https://react-icons.netlify.com/#/)
-- [UnForm](https://unform.dev/) [💜](https://rocketseat.com.br/)
-- [Styled Components](https://styled-components.com/)
 - [Axios](https://github.com/axios/axios)
 
 ## 💻 Getting started
